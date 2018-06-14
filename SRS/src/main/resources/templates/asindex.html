@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World th!</title>
+</head>
+<body>
+<!--/*@thymesVar id="msg" type="java.lang.String"*/-->
+<span th:text="${msg}">MSG</span>
+<div th:text="${#dates.format(#dates.createNow(), 'dd/MMM/yyyy HH:mm')}"></div>
+<table>
+  <thead>
+  <tr>
+    <th th:utext="#{msgs.headers.name}">Name</th>
+    <th th:text="#{msgs.headers.price}">Price</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="prod: ${allProducts}">
+    <td th:text="${prod.name}">Oranges</td>
+    <!--<td th:text="${#numbers.formatDecimal(prod.price, 1, 2)}">0.99</td>-->
+  </tr>
+  </tbody>
+</table>
+<form action="/guitars/search" method="post">
+  <input type="number" name="typeId"/>
+  <button type="submit">submit</button>
+</form>
+</body>
+</html>
