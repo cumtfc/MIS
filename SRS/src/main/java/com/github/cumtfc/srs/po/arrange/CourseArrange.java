@@ -94,7 +94,7 @@ public class CourseArrange {
         this.teacher = teacher;
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "CourseArrange")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "courseArrange")
     public List<CourseSelection> getCourseSelections() {
         return courseSelections;
     }
