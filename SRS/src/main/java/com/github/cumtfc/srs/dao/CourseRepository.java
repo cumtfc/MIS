@@ -8,5 +8,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2018/6/8-19:12
  */
 public interface CourseRepository extends JpaRepository<Course,Integer> {
-
 }

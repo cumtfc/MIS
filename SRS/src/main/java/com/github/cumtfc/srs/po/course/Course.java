@@ -3,6 +3,7 @@ package com.github.cumtfc.srs.po.course;
 import com.github.cumtfc.srs.po.arrange.CourseArrange;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames = {"courseSn"}))
-public class Course {
+public class Course implements Serializable {
 
     private Integer id;
 
@@ -52,7 +53,7 @@ public class Course {
         this.credit = credit;
     }
 
-    @ManyToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY)
+    @ManyToMany(cascade={CascadeType.DETACH},fetch = FetchType.LAZY)
     @JoinColumn(name = "prevCourseId",referencedColumnName = "id")
     public List<Course> getPrevCourses() {
         return prevCourses;

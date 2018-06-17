@@ -3,9 +3,12 @@ package com.github.cumtfc.srs.service.course;
 import com.github.cumtfc.srs.dao.CourseRepository;
 import com.github.cumtfc.srs.po.course.Course;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author 冯楚
@@ -24,7 +27,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Course saveOne(Course course) {
+//        for (int i = 0; i < course.getPrevCourses().size(); i++) {
+//
+//            Optional<Course> coursePo = courseRepository.findById(course.getPrevCourses().get(i).getId());
+//            if (coursePo.isPresent()) {
+//                course.getPrevCourses().set(i, coursePo.get());
+//            }
+//        }
         return courseRepository.save(course);
 
     }
