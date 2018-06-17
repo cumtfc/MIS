@@ -1,6 +1,7 @@
 package com.github.cumtfc.srs.po.teacher;
 
 import com.github.cumtfc.srs.po.arrange.CourseArrange;
+import com.github.cumtfc.srs.po.user.SysUser;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,6 +25,8 @@ public class Teacher {
     private String name;
 
     private List<CourseArrange> courseArranges;
+
+    private SysUser user;
 
 
     @Id
@@ -75,5 +78,15 @@ public class Teacher {
 
     public void setCourseArranges(List<CourseArrange> courseArranges) {
         this.courseArranges = courseArranges;
+    }
+
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId",referencedColumnName = "id")
+    public SysUser getUser() {
+        return user;
+    }
+
+    public void setUser(SysUser user) {
+        this.user = user;
     }
 }

@@ -1,17 +1,11 @@
-import { SettingsService } from '@delon/theme';
-import { Component, OnDestroy, Inject, Optional } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import {
-  SocialService,
-  SocialOpenType,
-  TokenService,
-  DA_SERVICE_TOKEN,
-} from '@delon/auth';
-import { ReuseTabService } from '@delon/abc';
-import { environment } from '@env/environment';
-import { StartupService } from '@core/startup/startup.service';
+import {SettingsService} from '@delon/theme';
+import {Component, Inject, OnDestroy, OnInit, Optional} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {DA_SERVICE_TOKEN, SocialService, TokenService,} from '@delon/auth';
+import {ReuseTabService} from '@delon/abc';
+import {StartupService} from '@core/startup/startup.service';
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -20,7 +14,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./login.component.less'],
   providers: [SocialService],
 })
-export class UserLoginComponent implements OnDestroy {
+export class UserLoginComponent implements OnInit,OnDestroy {
   form: FormGroup;
   error = '';
   type = 0;
@@ -32,7 +26,6 @@ export class UserLoginComponent implements OnDestroy {
     public msg: NzMessageService,
     private modalSrv: NzModalService,
     private settingsService: SettingsService,
-    private socialService: SocialService,
     private http:HttpClient,
     @Optional()
     @Inject(ReuseTabService)
@@ -41,10 +34,8 @@ export class UserLoginComponent implements OnDestroy {
     private startupSrv: StartupService,
   ) {
     this.form = fb.group({
-      userName: [null, [Validators.required, Validators.minLength(5)]],
+      username: [null, [Validators.required]],
       password: [null, Validators.required],
-      mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
-      captcha: [null, [Validators.required]],
       remember: [true],
     });
     modalSrv.closeAll();
@@ -52,62 +43,35 @@ export class UserLoginComponent implements OnDestroy {
 
   // region: fields
 
-  get userName() {
-    return this.form.controls.userName;
+  get username() {
+    return this.form.controls.username;
   }
   get password() {
     return this.form.controls.password;
-  }
-  get mobile() {
-    return this.form.controls.mobile;
-  }
-  get captcha() {
-    return this.form.controls.captcha;
-  }
-
-  // endregion
-
-  switch(ret: any) {
-    this.type = ret.index;
-  }
-
-  // region: get captcha
-
-  count = 0;
-  interval$: any;
-
-  getCaptcha() {
-    this.count = 59;
-    this.interval$ = setInterval(() => {
-      this.count -= 1;
-      if (this.count <= 0) clearInterval(this.interval$);
-    }, 1000);
   }
 
   // endregion
 
   submit() {
     this.error = '';
-    if (this.type === 0) {
-      this.userName.markAsDirty();
-      this.userName.updateValueAndValidity();
+      this.username.markAsDirty();
+      this.username.updateValueAndValidity();
       this.password.markAsDirty();
       this.password.updateValueAndValidity();
-      if (this.userName.invalid || this.password.invalid) return;
-    } else {
-      this.mobile.markAsDirty();
-      this.mobile.updateValueAndValidity();
-      this.captcha.markAsDirty();
-      this.captcha.updateValueAndValidity();
-      if (this.mobile.invalid || this.captcha.invalid) return;
-    }
+      if (this.username.invalid || this.password.invalid) return;
     // mock http
     this.loading = true;
-    const url = `auth`;
-    this.http.post(url, this.form.value).subscribe(res=>{
+    const url = `login`;
+    let formData: FormData = new FormData();
+    formData.set('username',this.username.value);
+    formData.set('password',this.password.value);
+    // formData.append('username',this.username.value);
+    let data = `username=${this.username.value}&password=${this.password.value}&submit=Login`;
+    this.http.post(url, data,{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
+    .subscribe(res=>{
       this.loading = false;
       //todo 返回后的相关操作
-
+      this.msg.success("登陆成功");
       // 清空路由复用信息
       this.reuseTabService.clear();
       // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
@@ -117,52 +81,12 @@ export class UserLoginComponent implements OnDestroy {
     });
   }
 
-  // region: social
+  ngOnDestroy(): void {
 
-  open(type: string, openType: SocialOpenType = 'href') {
-    let url = ``;
-    let callback = ``;
-    if (environment.production)
-      callback = 'https://cipchk.github.io/ng-alain/callback/' + type;
-    else callback = 'http://localhost:4200/callback/' + type;
-    switch (type) {
-      case 'auth0':
-        url = `//cipchk.auth0.com/login?client=8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5&redirect_uri=${decodeURIComponent(
-          callback,
-        )}`;
-        break;
-      case 'github':
-        url = `//github.com/login/oauth/authorize?client_id=9d6baae4b04a23fcafa2&response_type=code&redirect_uri=${decodeURIComponent(
-          callback,
-        )}`;
-        break;
-      case 'weibo':
-        url = `https://api.weibo.com/oauth2/authorize?client_id=1239507802&response_type=code&redirect_uri=${decodeURIComponent(
-          callback,
-        )}`;
-        break;
-    }
-    if (openType === 'window') {
-      this.socialService
-        .login(url, '/', {
-          type: 'window',
-        })
-        .subscribe(res => {
-          if (res) {
-            this.settingsService.setUser(res);
-            this.router.navigateByUrl('/');
-          }
-        });
-    } else {
-      this.socialService.login(url, '/', {
-        type: 'href',
-      });
-    }
   }
 
-  // endregion
-
-  ngOnDestroy(): void {
-    if (this.interval$) clearInterval(this.interval$);
+  ngOnInit(): void{
+    const url = `logout`;
+    this.http.get(url).subscribe();
   }
 }

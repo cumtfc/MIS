@@ -3,6 +3,7 @@ package com.github.cumtfc.srs.po.student;
 import com.github.cumtfc.srs.po.arrange.CourseArrange;
 import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.po.selection.CourseSelection;
+import com.github.cumtfc.srs.po.user.SysUser;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,6 +31,8 @@ public class Student {
     private List<CourseArrange> courseArranges;
 
     private List<CourseSelection> courseSelections;
+
+    private SysUser user;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -99,5 +102,15 @@ public class Student {
 
     public void setCourseSelections(List<CourseSelection> courseSelections) {
         this.courseSelections = courseSelections;
+    }
+
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId",referencedColumnName = "id")
+    public SysUser getUser() {
+        return user;
+    }
+
+    public void setUser(SysUser user) {
+        this.user = user;
     }
 }
