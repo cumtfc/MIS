@@ -1,5 +1,8 @@
 package com.github.cumtfc.srs.application;
 
+import com.github.cumtfc.srs.dao.SysUserRepository;
+import com.github.cumtfc.srs.po.user.SysUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -11,7 +14,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -57,7 +62,7 @@ public class DemoApplication implements WebMvcConfigurer {
 
         @Bean
         UserDetailsService customUserService() {
-            return new CustomUserService();
+            return new CustomUserServiceImpl();
         }
 
         @Bean
@@ -79,6 +84,20 @@ public class DemoApplication implements WebMvcConfigurer {
                 .logout().deleteCookies().logoutSuccessUrl("/auth/logout_success").permitAll()
                 .and().exceptionHandling().authenticationEntryPoint(loginUrlAuthenticationEntryPoint())
                 .and().cors().and().csrf().disable();
+        }
+    }
+
+
+    public class CustomUserServiceImpl implements UserDetailsService {
+        @Autowired
+        SysUserRepository userRepository;
+        @Override
+        public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+            SysUser user = userRepository.findByUsername(s);
+            if (user == null) {
+                throw new UsernameNotFoundException("用户名不存在");
+            }
+            return user;
         }
     }
 

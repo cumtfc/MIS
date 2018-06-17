@@ -26,14 +26,44 @@ public class AuthController {
         SysUser userDetails = (SysUser) SecurityContextHolder.getContext()
             .getAuthentication()
             .getPrincipal();
-        userDetails.getUsername();
-        JSONObject res = new JSONObject();
-        res.put("user", userDetails.getUsername());
+        String userName = "";
         JSONArray menus = new JSONArray();
-        JSONObject menu = new JSONObject();
-        menu.put("text", "课程管理");
-        menu.put("link", "/courses");
-        menus.put(menu);
+        if (userDetails.getStudent()!=null) {
+            userName = userDetails.getStudent().getName();
+            JSONObject studyPlan = new JSONObject();
+            studyPlan.put("text", "学习计划");
+            studyPlan.put("link", "/studyPlan");
+            menus.put(studyPlan);
+            JSONObject courseSelection = new JSONObject();
+            courseSelection.put("text", "学生选课");
+            courseSelection.put("link", "/courseSelection");
+            menus.put(courseSelection);
+            JSONObject scoreQuery = new JSONObject();
+            scoreQuery.put("text", "成绩查询");
+            scoreQuery.put("link", "/scoreQuery");
+            menus.put(scoreQuery);
+        }else if (userDetails.getTeacher()!=null){
+            userName = userDetails.getTeacher().getName();
+            JSONObject courses = new JSONObject();
+            courses.put("text", "课程管理");
+            courses.put("link", "/courses");
+            menus.put(courses);
+            JSONObject arrange = new JSONObject();
+            arrange.put("text", "教师选课");
+            arrange.put("link", "/arrange");
+            menus.put(arrange);
+            JSONObject statistics = new JSONObject();
+            statistics.put("text", "选课统计");
+            statistics.put("link", "/statistics");
+            menus.put(statistics);
+            JSONObject creditVerification = new JSONObject();
+            creditVerification.put("text", "学分校验");
+            creditVerification.put("link", "/creditVerification");
+            menus.put(creditVerification);
+        }
+
+        JSONObject res = new JSONObject();
+        res.put("user", userName);
         res.put("menu", menus);
         return ResponseEntity.ok(res.toString());
     }
