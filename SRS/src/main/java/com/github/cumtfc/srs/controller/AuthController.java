@@ -32,33 +32,33 @@ public class AuthController {
             userName = userDetails.getStudent().getName();
             JSONObject studyPlan = new JSONObject();
             studyPlan.put("text", "学习计划");
-            studyPlan.put("link", "/studyPlan");
+            studyPlan.put("link", "/student/study-plan");
             menus.put(studyPlan);
             JSONObject courseSelection = new JSONObject();
             courseSelection.put("text", "学生选课");
-            courseSelection.put("link", "/courseSelection");
+            courseSelection.put("link", "/student/course-selection");
             menus.put(courseSelection);
             JSONObject scoreQuery = new JSONObject();
             scoreQuery.put("text", "成绩查询");
-            scoreQuery.put("link", "/scoreQuery");
+            scoreQuery.put("link", "/student/score-query");
             menus.put(scoreQuery);
         }else if (userDetails.getTeacher()!=null){
             userName = userDetails.getTeacher().getName();
             JSONObject courses = new JSONObject();
             courses.put("text", "课程管理");
-            courses.put("link", "/courses");
+            courses.put("link", "/teacher/courses");
             menus.put(courses);
             JSONObject arrange = new JSONObject();
             arrange.put("text", "教师选课");
-            arrange.put("link", "/arrange");
+            arrange.put("link", "/teacher/arrange");
             menus.put(arrange);
             JSONObject statistics = new JSONObject();
             statistics.put("text", "选课统计");
-            statistics.put("link", "/statistics");
+            statistics.put("link", "/teacher/statistics");
             menus.put(statistics);
             JSONObject creditVerification = new JSONObject();
             creditVerification.put("text", "学分校验");
-            creditVerification.put("link", "/creditVerification");
+            creditVerification.put("link", "/teacher/creditVerification");
             menus.put(creditVerification);
         }
 

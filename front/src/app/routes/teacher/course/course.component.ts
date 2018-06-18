@@ -13,14 +13,6 @@ export class TeacherCourseComponent implements OnInit {
 
   params: any = {};
   dataSet: any = [];
-  searchSchema: SFSchema = {
-    properties: {
-      id: {
-        type : 'string',
-        title: '编号'
-      }
-    }
-  };
   @ViewChild('st') st: SimpleTableComponent;
   columns: SimpleTableColumn[] = [
     {title: '编号', index: 'courseSn'},

@@ -22,7 +22,7 @@ public class CourseController {
 
     @GetMapping(value = "")
     public ResponseEntity findAll() {
-        return ResponseEntity.ok(courseService.findAll());
+        return ResponseEntity.ok(courseService.findAllInJson());
     }
 
     @PostMapping(value = "", consumes = {APPLICATION_JSON_UTF8_VALUE})

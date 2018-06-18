@@ -1,5 +1,8 @@
 package com.github.cumtfc.srs.po.course;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.cumtfc.srs.po.arrange.CourseArrange;
 
 import javax.persistence.*;
@@ -25,6 +28,7 @@ public class Course implements Serializable {
     private List<Course> prevCourses;
 
     private List<CourseArrange> courseArranges;
+
 
 
     @Id

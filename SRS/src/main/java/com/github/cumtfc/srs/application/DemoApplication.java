@@ -1,5 +1,6 @@
 package com.github.cumtfc.srs.application;
 
+import com.github.cumtfc.srs.bind.CurrentUserMethodArgumentResolver;
 import com.github.cumtfc.srs.dao.SysUserRepository;
 import com.github.cumtfc.srs.po.user.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -28,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * @author 冯楚
@@ -52,6 +56,17 @@ public class DemoApplication implements WebMvcConfigurer {
             .allowCredentials(true).maxAge(3600);
     }
 
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(currentUserMethodArgumentResolver());
+    }
+
+    @Bean
+    CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver(){
+        return new CurrentUserMethodArgumentResolver();
+    }
+
+
     @Configuration
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -69,7 +84,6 @@ public class DemoApplication implements WebMvcConfigurer {
         LoginUrlAuthenticationEntryPoint loginUrlAuthenticationEntryPoint() {
             return new LoginUrlAuthenticationEntryPoint();
         }
-
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
