@@ -1,9 +1,11 @@
 package com.github.cumtfc.srs.service.course;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.cumtfc.srs.dao.CourseRepository;
 import com.github.cumtfc.srs.po.course.Course;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +23,20 @@ public class CourseServiceImpl implements CourseService {
     CourseRepository courseRepository;
 
     @Override
-    public List<Course> findAll() {
-        System.out.println(courseRepository);
-        return courseRepository.findAll();
+    public ArrayNode findAll() {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Course> courses = courseRepository.findAll();
+        ArrayNode arrayNode = mapper.createArrayNode();
+        for (Course course : courses) {
+            ObjectNode objectNode = mapper.convertValue(course, ObjectNode.class);
+            StringBuilder preString = new StringBuilder();
+            for (Course pre : course.getPrevCourses()) {
+                preString.append(pre.getCourseName()).append(";");
+            }
+            objectNode.put("prevCoursesString", preString.toString());
+            arrayNode.add(objectNode);
+        }
+        return arrayNode;
     }
 
     @Override

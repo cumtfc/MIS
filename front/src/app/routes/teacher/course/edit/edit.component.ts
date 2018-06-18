@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
 import {_HttpClient} from '@delon/theme';
 import {SFSchema, SFUISchema} from '@delon/form';
-import { of } from 'rxjs';
+import {of} from 'rxjs';
 import {delay} from 'rxjs/operators';
 import {SFComponent} from "@delon/form/src/src/sf.component";
 
@@ -35,9 +35,9 @@ export class TeacherCourseEditComponent implements OnInit {
       grid  : {span: 12},
     },
     $prevCourses: {
-      widget: 'select',
-      mode  : 'multiple',
-      asyncData: () => of(this.courses).pipe(delay(1200))
+      widget   : 'select',
+      mode     : 'multiple',
+      asyncData: () => of(this.courses).pipe(delay(500))
     }
   };
 
@@ -53,11 +53,23 @@ export class TeacherCourseEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.courses = this.courses.map(course => {
-      return {label: course.courseName, value: {id:course.id}}
+      return {label: course.courseName, value: course.id}
     });
+
+    if (this.record && this.record.prevCourses) {
+      this.record.prevCourses = this.record.prevCourses.map(course => {
+        return course.id;
+      });
+    }
   }
 
   save(value: any) {
+    if (value.prevCourses) {
+      let pre: any[] = value.prevCourses;
+      value.prevCourses=pre.map(p => {
+        return {id: p};
+      });
+    }
     const url = `courses`;
     this.http.post(url, value).subscribe(res => {
       this.msgSrv.success('保存成功');

@@ -1,5 +1,6 @@
 package com.github.cumtfc.srs.service.course;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.github.cumtfc.srs.po.course.Course;
 
 import java.util.List;
@@ -11,10 +12,10 @@ import java.util.List;
 public interface CourseService {
 
     /**
-     * 获取全部课程
+     * 获取全部课程JSON
      * @return List<Course>
      */
-    List<Course> findAll();
+    ArrayNode findAll();
 
 
     /**
