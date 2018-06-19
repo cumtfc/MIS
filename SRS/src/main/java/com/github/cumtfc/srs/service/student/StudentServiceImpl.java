@@ -36,6 +36,20 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Course> addOneStudyPlanRecord(Course course, Student student) {
+        student.getStudyPlan().add(course);
+        studentRepository.save(student);
+        return student.getStudyPlan();
+    }
+
+    @Override
+    public List<Course> deleteOneStudentPlanRecord(Integer courseId,Student student){
+        student.getStudyPlan().removeIf(course -> course.getId().equals(courseId));
+        studentRepository.save(student);
+        return student.getStudyPlan();
+    }
+
+    @Override
     public Student findStudentById(Integer id){
         Optional<Student> studentOptional = studentRepository.findById(id);
         return studentOptional.orElse(null);

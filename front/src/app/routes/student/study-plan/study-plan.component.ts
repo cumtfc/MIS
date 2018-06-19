@@ -15,10 +15,9 @@ export class StudentStudyPlanComponent implements OnInit {
   dataSet: any = [];
   @ViewChild('st') st: SimpleTableComponent;
   columns: SimpleTableColumn[] = [
-    {title: '编号', index: 'no'},
-    {title: '调用次数', type: 'number', index: 'callNo'},
-    {title: '头像', type: 'img', width: '50px', index: 'avatar'},
-    {title: '时间', type: 'date', index: 'updatedAt'},
+    {title: '课程编号', index: 'courseSn'},
+    {title: '课程名', index: 'courseName'},
+    {title: '学分',index: 'credit'},
     {
       title  : '',
       buttons: [
@@ -43,14 +42,15 @@ export class StudentStudyPlanComponent implements OnInit {
 
   delete(record) {
     const url = `students/studyPlans/${record.id}`;
-    this.http.delete(url).subscribe(()=>{
-      this.reloadData();
+    this.http.delete(url).subscribe((data)=>{
+      this.dataSet = data;
+      // this.reloadData();
     })
   }
 
-  add() {
+  edit() {
     this.modal
-      .static(StudentStudyPlanEditComponent, { i: { id: 0 } })
+      .static(StudentStudyPlanEditComponent)
       .pipe(filter(w => w === true))
       .subscribe(() => this.reloadData());
   }
