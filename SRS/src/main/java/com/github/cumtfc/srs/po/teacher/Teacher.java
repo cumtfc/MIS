@@ -1,6 +1,6 @@
 package com.github.cumtfc.srs.po.teacher;
 
-import com.github.cumtfc.srs.po.arrange.Section;
+import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.user.SysUser;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package com.github.cumtfc.srs.po.arrange;
+package com.github.cumtfc.srs.po.section;
 
 import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.po.selection.CourseSelection;

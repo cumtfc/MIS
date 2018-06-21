@@ -1,6 +1,6 @@
 package com.github.cumtfc.srs.po.student;
 
-import com.github.cumtfc.srs.po.arrange.Section;
+import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.po.selection.CourseSelection;
 import com.github.cumtfc.srs.po.user.SysUser;

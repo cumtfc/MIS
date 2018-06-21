@@ -38,7 +38,7 @@ import java.util.List;
  * @date 2018/6/8-19:12
  */
 @SpringBootApplication(scanBasePackages = {"com.github.cumtfc.srs.controller", "com.github.cumtfc.srs.service",
-    "com.github.cumtfc.srs.component"})
+    "com.github.cumtfc.srs.component","com.github.cumtfc.srs.domain"})
 @EntityScan(basePackages = "com.github.cumtfc.srs.po")
 @EnableJpaRepositories(basePackages = "com.github.cumtfc.srs.dao")
 @EnableConfigurationProperties

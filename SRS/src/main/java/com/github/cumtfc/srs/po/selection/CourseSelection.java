@@ -1,6 +1,6 @@
 package com.github.cumtfc.srs.po.selection;
 
-import com.github.cumtfc.srs.po.arrange.Section;
+import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.student.Student;
 
 import javax.persistence.*;

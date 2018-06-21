@@ -1,6 +1,6 @@
 package com.github.cumtfc.srs.po.course;
 
-import com.github.cumtfc.srs.po.arrange.Section;
+import com.github.cumtfc.srs.po.section.Section;
 
 import javax.persistence.*;
 import java.io.Serializable;

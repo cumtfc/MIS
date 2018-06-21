@@ -1,15 +1,15 @@
 package com.github.cumtfc.srs.controller;
 
+import com.github.cumtfc.srs.bind.CurrentUser;
 import com.github.cumtfc.srs.po.user.SysUser;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
+import com.github.cumtfc.srs.service.auth.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
@@ -21,63 +21,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 @RequestMapping(value = "auth", produces = {APPLICATION_JSON_UTF8_VALUE})
 public class AuthController {
 
-    @GetMapping(value = "init",produces =  {APPLICATION_JSON_UTF8_VALUE})
-    public ResponseEntity init() throws JSONException {
-        SysUser userDetails = (SysUser) SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal();
-        String userName = "";
-        JSONArray menus = new JSONArray();
-        if (userDetails.getStudent()!=null) {
-            userName = userDetails.getStudent().getName();
-            JSONObject studyPlan = new JSONObject();
-            studyPlan.put("text", "学习计划");
-            studyPlan.put("link", "/student/study-plan");
-            studyPlan.put("icon", "anticon anticon-appstore-o");
-            menus.put(studyPlan);
-            JSONObject courseSelection = new JSONObject();
-            courseSelection.put("text", "学生选课");
-            courseSelection.put("link", "/student/course-selection");
-            courseSelection.put("icon", "anticon anticon-appstore-o");
-            menus.put(courseSelection);
-            JSONObject scoreQuery = new JSONObject();
-            scoreQuery.put("text", "成绩查询");
-            scoreQuery.put("link", "/student/score-query");
-            scoreQuery.put("icon", "anticon anticon-appstore-o");
-            menus.put(scoreQuery);
-        }else if (userDetails.getTeacher()!=null){
-            userName = userDetails.getTeacher().getName();
-            JSONObject courses = new JSONObject();
-            courses.put("text", "课程管理");
-            courses.put("link", "/teacher/courses");
-            courses.put("icon", "anticon anticon-appstore-o");
-            menus.put(courses);
-            JSONObject arrange = new JSONObject();
-            arrange.put("text", "教务排课");
-            arrange.put("link", "/teacher/arrange");
-            arrange.put("icon", "anticon anticon-appstore-o");
-            menus.put(arrange);
-            JSONObject section = new JSONObject();
-            section.put("text", "教师选课");
-            section.put("link", "/teacher/section");
-            section.put("icon", "anticon anticon-appstore-o");
-            menus.put(arrange);
-            JSONObject statistics = new JSONObject();
-            statistics.put("text", "选课统计");
-            statistics.put("link", "/teacher/statistics");
-            statistics.put("icon", "anticon anticon-appstore-o");
-            menus.put(statistics);
-            JSONObject creditVerification = new JSONObject();
-            creditVerification.put("text", "学分校验");
-            creditVerification.put("link", "/teacher/creditVerification");
-            creditVerification.put("icon", "anticon anticon-appstore-o");
-            menus.put(creditVerification);
-        }
+    @Autowired
+    AuthService authService;
 
-        JSONObject res = new JSONObject();
-        res.put("user", userName);
-        res.put("menu", menus);
-        return ResponseEntity.ok(res.toString());
+    @GetMapping(value = "init", produces = {APPLICATION_JSON_UTF8_VALUE})
+    public ResponseEntity init(@CurrentUser SysUser user) throws JSONException {
+        return ResponseEntity.ok(authService.init(user));
     }
 
     @PostMapping("login_success")

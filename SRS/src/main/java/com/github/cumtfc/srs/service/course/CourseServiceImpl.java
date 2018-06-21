@@ -18,11 +18,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     CourseRepository courseRepository;
+    @Autowired
+    CourseCatalog catalog;
 
     @Override
     public String findAllInJson() {
         List<Course> courses = courseRepository.findAll();
-        CourseCatalog catalog = new CourseCatalog();
         return catalog.toJSON(courses);
     }
 
