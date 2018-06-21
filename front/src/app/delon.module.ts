@@ -14,8 +14,14 @@ import { DelonAuthModule } from '@delon/auth';
 import { DelonACLModule } from '@delon/acl';
 import { DelonCacheModule } from '@delon/cache';
 import { DelonUtilModule } from '@delon/util';
-// region: global config functions
 
+// mock
+import { DelonMockModule } from '@delon/mock';
+import * as MOCKDATA from '../../_mock';
+import { environment } from '@env/environment';
+const MOCKMODULE = environment.enableMock ? [DelonMockModule.forRoot({ data: MOCKDATA})] : [];
+
+// region: global config functions
 import { AdPageHeaderConfig } from '@delon/abc';
 export function pageHeaderConfig(): AdPageHeaderConfig {
   return Object.assign(new AdPageHeaderConfig(), { home_i18n: 'home' });
@@ -39,6 +45,8 @@ export function delonAuthConfig(): DelonAuthConfig {
     DelonACLModule.forRoot(),
     DelonCacheModule.forRoot(),
     DelonUtilModule.forRoot(),
+    // mock
+    ...MOCKMODULE,
   ],
 })
 export class DelonModule {

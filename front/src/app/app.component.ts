@@ -1,7 +1,8 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { SettingsService, TitleService } from '@delon/theme';
+import {_HttpClient, SettingsService, TitleService} from '@delon/theme';
 import { filter } from 'rxjs/operators';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
     private settings: SettingsService,
     private router: Router,
     private titleSrv: TitleService,
+    private http:HttpClient
   ) {}
 
   ngOnInit() {

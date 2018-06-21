@@ -53,9 +53,14 @@ public class AuthController {
             courses.put("icon", "anticon anticon-appstore-o");
             menus.put(courses);
             JSONObject arrange = new JSONObject();
-            arrange.put("text", "教师选课");
+            arrange.put("text", "教务排课");
             arrange.put("link", "/teacher/arrange");
             arrange.put("icon", "anticon anticon-appstore-o");
+            menus.put(arrange);
+            JSONObject section = new JSONObject();
+            section.put("text", "教师选课");
+            section.put("link", "/teacher/section");
+            section.put("icon", "anticon anticon-appstore-o");
             menus.put(arrange);
             JSONObject statistics = new JSONObject();
             statistics.put("text", "选课统计");

@@ -6,6 +6,7 @@ export const environment = {
   SERVER_URL: `http://localhost:8080/`,
   production: false,
   useHash: true,
+  enableMock: true
 };
 
 /*
