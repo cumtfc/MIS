@@ -1,9 +1,6 @@
 package com.github.cumtfc.srs.po.course;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.cumtfc.srs.po.arrange.CourseArrange;
+import com.github.cumtfc.srs.po.arrange.Section;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,7 +24,7 @@ public class Course implements Serializable {
 
     private List<Course> prevCourses;
 
-    private List<CourseArrange> courseArranges;
+    private List<Section> sections;
 
 
 
@@ -76,11 +73,11 @@ public class Course implements Serializable {
     }
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "course")
-    public List<CourseArrange> getCourseArranges() {
-        return courseArranges;
+    public List<Section> getSections() {
+        return sections;
     }
 
-    public void setCourseArranges(List<CourseArrange> courseArranges) {
-        this.courseArranges = courseArranges;
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
     }
 }

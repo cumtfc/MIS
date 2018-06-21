@@ -12,7 +12,7 @@ import java.util.List;
  * @date 2018/6/8-19:12
  */
 @Entity
-public class CourseArrange {
+public class Section {
 
     private Integer id;
 
@@ -94,7 +94,7 @@ public class CourseArrange {
         this.teacher = teacher;
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "courseArrange")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "section")
     public List<CourseSelection> getCourseSelections() {
         return courseSelections;
     }

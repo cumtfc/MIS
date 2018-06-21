@@ -1,6 +1,6 @@
 package com.github.cumtfc.srs.po.selection;
 
-import com.github.cumtfc.srs.po.arrange.CourseArrange;
+import com.github.cumtfc.srs.po.arrange.Section;
 import com.github.cumtfc.srs.po.student.Student;
 
 import javax.persistence.*;
@@ -14,7 +14,7 @@ public class CourseSelection {
 
     private Integer id;
 
-    private CourseArrange courseArrange;
+    private Section section;
 
     private Student student;
 
@@ -32,13 +32,13 @@ public class CourseSelection {
 
     @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "courseId", referencedColumnName = "id")
-    public CourseArrange getCourseArrange() {
-        return courseArrange;
+    public Section getSection() {
+        return section;
     }
 
 
-    public void setCourseArrange(CourseArrange courseArrange) {
-        this.courseArrange = courseArrange;
+    public void setSection(Section section) {
+        this.section = section;
     }
 
     @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)

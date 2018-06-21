@@ -1,6 +1,6 @@
 package com.github.cumtfc.srs.po.teacher;
 
-import com.github.cumtfc.srs.po.arrange.CourseArrange;
+import com.github.cumtfc.srs.po.arrange.Section;
 import com.github.cumtfc.srs.po.user.SysUser;
 
 import javax.persistence.*;
@@ -24,7 +24,7 @@ public class Teacher {
 
     private String name;
 
-    private List<CourseArrange> courseArranges;
+    private List<Section> sections;
 
     private SysUser user;
 
@@ -72,12 +72,12 @@ public class Teacher {
     }
 
     @OneToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY,mappedBy = "teacher")
-    public List<CourseArrange> getCourseArranges() {
-        return courseArranges;
+    public List<Section> getSections() {
+        return sections;
     }
 
-    public void setCourseArranges(List<CourseArrange> courseArranges) {
-        this.courseArranges = courseArranges;
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
     }
 
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)

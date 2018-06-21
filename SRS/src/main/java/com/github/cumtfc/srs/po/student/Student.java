@@ -1,6 +1,6 @@
 package com.github.cumtfc.srs.po.student;
 
-import com.github.cumtfc.srs.po.arrange.CourseArrange;
+import com.github.cumtfc.srs.po.arrange.Section;
 import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.po.selection.CourseSelection;
 import com.github.cumtfc.srs.po.user.SysUser;
@@ -28,7 +28,7 @@ public class Student {
 
     private List<Course> studyPlan;
 
-    private List<CourseArrange> courseArranges;
+    private List<Section> sections;
 
     private List<CourseSelection> courseSelections;
 
@@ -87,12 +87,12 @@ public class Student {
     }
 
     @OneToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY,mappedBy = "teacher")
-    public List<CourseArrange> getCourseArranges() {
-        return courseArranges;
+    public List<Section> getSections() {
+        return sections;
     }
 
-    public void setCourseArranges(List<CourseArrange> courseArranges) {
-        this.courseArranges = courseArranges;
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
     }
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "student")
