@@ -1,5 +1,6 @@
-package com.github.cumtfc.srs.po.selection;
+package com.github.cumtfc.srs.po.transcript;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.student.Student;
 
@@ -10,10 +11,11 @@ import javax.persistence.*;
  * @date 2018/6/8-19:12
  */
 @Entity
-public class CourseSelection {
+public class Transcript {
 
     private Integer id;
 
+    @JsonManagedReference
     private Section section;
 
     private Student student;

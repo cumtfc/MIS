@@ -1,10 +1,14 @@
 package com.github.cumtfc.srs.po.section;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.cumtfc.srs.po.course.Course;
-import com.github.cumtfc.srs.po.selection.CourseSelection;
+import com.github.cumtfc.srs.po.transcript.Transcript;
 import com.github.cumtfc.srs.po.teacher.Teacher;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,9 +16,13 @@ import java.util.List;
  * @date 2018/6/8-19:12
  */
 @Entity
-public class Section {
+@Table(uniqueConstraints=@UniqueConstraint(columnNames = {"sectionSn"}))
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+public class Section implements Serializable {
 
     private Integer id;
+
+    private String sectionSn;
 
     private String dayOfWeek;
 
@@ -24,11 +32,14 @@ public class Section {
 
     private Integer capacity;
 
-    private Course course;
-
+    @JsonManagedReference
+    private Course course
+        ;
+    @JsonManagedReference
     private Teacher teacher;
 
-    private List<CourseSelection> courseSelections;
+    @JsonBackReference
+    private List<Transcript> transcripts;
 
 
     @Id
@@ -75,7 +86,7 @@ public class Section {
     }
 
     @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "sectionId", referencedColumnName = "id")
+    @JoinColumn(name = "courseId", referencedColumnName = "id")
     public Course getCourse() {
         return course;
     }
@@ -95,11 +106,19 @@ public class Section {
     }
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "section")
-    public List<CourseSelection> getCourseSelections() {
-        return courseSelections;
+    public List<Transcript> getTranscripts() {
+        return transcripts;
     }
 
-    public void setCourseSelections(List<CourseSelection> courseSelections) {
-        this.courseSelections = courseSelections;
+    public void setTranscripts(List<Transcript> transcripts) {
+        this.transcripts = transcripts;
+    }
+
+    public String getSectionSn() {
+        return sectionSn;
+    }
+
+    public void setSectionSn(String sectionSn) {
+        this.sectionSn = sectionSn;
     }
 }

@@ -1,5 +1,7 @@
 package com.github.cumtfc.srs.po.course;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.cumtfc.srs.po.section.Section;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames = {"courseSn"}))
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Course implements Serializable {
 
     private Integer id;
@@ -24,6 +27,7 @@ public class Course implements Serializable {
 
     private List<Course> prevCourses;
 
+    @JsonBackReference
     private List<Section> sections;
 
 

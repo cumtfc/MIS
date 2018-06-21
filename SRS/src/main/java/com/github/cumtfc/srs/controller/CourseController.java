@@ -12,7 +12,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
  * @author 冯楚
  * @date 2018/6/8-19:12
  */
-@CrossOrigin
 @RestController
 @RequestMapping(value = "courses", produces = {APPLICATION_JSON_UTF8_VALUE})
 public class CourseController {

@@ -2,10 +2,11 @@ package com.github.cumtfc.srs.po.student;
 
 import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.course.Course;
-import com.github.cumtfc.srs.po.selection.CourseSelection;
+import com.github.cumtfc.srs.po.transcript.Transcript;
 import com.github.cumtfc.srs.po.user.SysUser;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames = {"studentSn"}))
-public class Student {
+public class Student implements Serializable {
 
     private Integer id;
 
@@ -30,7 +31,7 @@ public class Student {
 
     private List<Section> sections;
 
-    private List<CourseSelection> courseSelections;
+    private List<Transcript> transcripts;
 
     private SysUser user;
 
@@ -96,12 +97,12 @@ public class Student {
     }
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "student")
-    public List<CourseSelection> getCourseSelections() {
-        return courseSelections;
+    public List<Transcript> getTranscripts() {
+        return transcripts;
     }
 
-    public void setCourseSelections(List<CourseSelection> courseSelections) {
-        this.courseSelections = courseSelections;
+    public void setTranscripts(List<Transcript> transcripts) {
+        this.transcripts = transcripts;
     }
 
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)

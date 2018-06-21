@@ -1,9 +1,12 @@
 package com.github.cumtfc.srs.po.teacher;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.user.SysUser;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +15,8 @@ import java.util.List;
  */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"teacherSn"}))
-public class Teacher {
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+public class Teacher  implements Serializable {
 
     private Integer id;
 
@@ -24,6 +28,7 @@ public class Teacher {
 
     private String name;
 
+    @JsonBackReference
     private List<Section> sections;
 
     private SysUser user;
