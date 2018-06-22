@@ -12,4 +12,6 @@ import java.util.List;
 public interface SectionRepository extends JpaRepository<Section,Integer> {
 
     List<Section> findSectionsByTeacherNull();
+
+    List<Section> findSectionsByTeacherNotNull();
 }

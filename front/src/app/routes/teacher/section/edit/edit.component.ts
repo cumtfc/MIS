@@ -44,7 +44,6 @@ import {SimpleTableColumn, SimpleTableComponent} from "@delon/abc";
       const url = `sections/teacher/available`;
       this.http.get(url).subscribe((data: any) => {
         this.dataSet = data;
-        console.log(this.dataSet);
       });
     }
 

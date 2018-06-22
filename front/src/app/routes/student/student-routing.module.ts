@@ -7,7 +7,7 @@ import { StudentTranscriptComponent } from './transcript/transcript.component';
 const routes: Routes = [
 
   { path: 'study-plan', component: StudentStudyPlanComponent },
-  { path: 'selection', component: StudentSelectionComponent },
+  { path: 'course-selection', component: StudentSelectionComponent },
   { path: 'transcript', component: StudentTranscriptComponent }];
 
 @NgModule({

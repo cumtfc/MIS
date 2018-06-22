@@ -38,7 +38,7 @@ public class SectionServiceImpl implements SectionService {
     @Override
     public Section saveOne(Section section) {
         if (section.getSectionSn() == null) {
-            section.setSectionSn(UUID.randomUUID().toString());
+            section.setSectionSn(UUID.randomUUID().toString().substring(0,8));
         }
         return sectionRepository.save(section);
     }
@@ -65,8 +65,13 @@ public class SectionServiceImpl implements SectionService {
     }
 
     @Override
+    public String getStudentSectionAvailable() {
+        return catalog.getSectionJson(sectionRepository.findSectionsByTeacherNotNull());
+    }
+
+    @Override
     public Section chooseOneSection(Teacher teacher, Section section) {
-        if (section.getCourse()==null) {
+        if (section.getCourse() == null) {
             Optional<Section> id = sectionRepository.findById(section.getId());
             if (id.isPresent()) {
                 section = id.get();
@@ -75,4 +80,19 @@ public class SectionServiceImpl implements SectionService {
         section.setTeacher(teacher);
         return sectionRepository.save(section);
     }
+
+    @Override
+    public boolean unChooseOneSection(Integer sectionID) {
+        Optional<Section> sectionOptional = sectionRepository.findById(sectionID);
+        Section section = null;
+        if (sectionOptional.isPresent()) {
+            section = sectionOptional.get();
+        } else {
+            return false;
+        }
+        section.setTeacher(null);
+        sectionRepository.save(section);
+        return true;
+    }
+
 }

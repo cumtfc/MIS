@@ -64,8 +64,9 @@ export class TeacherSectionComponent implements OnInit {
   add() {
     this.modal
     .static(TeacherSectionEditComponent, {i: {}})
-    .pipe(filter(w => w === true))
-    .subscribe(() => this.reloadData());
+    .subscribe(() => {
+      this.reloadData();
+    });
   }
 
 }

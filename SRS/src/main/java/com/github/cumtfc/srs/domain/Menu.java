@@ -17,7 +17,7 @@ public class Menu {
         List<MenuItem> menu = new ArrayList<>();
         if (sysUser.getStudent() != null) {
             menu.add(new MenuItem("学习计划", "/student/study-plan", "anticon anticon-appstore-o"));
-            menu.add(new MenuItem("学生选课", "/student/course-transcript", "anticon anticon-appstore-o"));
+            menu.add(new MenuItem("学生选课", "/student/course-selection", "anticon anticon-appstore-o"));
             menu.add(new MenuItem("成绩查询", "/student/score-query", "anticon anticon-appstore-o"));
         } else if (sysUser.getTeacher() != null) {
             menu.add(new MenuItem("课程管理", "/teacher/courses", "anticon anticon-appstore-o"));

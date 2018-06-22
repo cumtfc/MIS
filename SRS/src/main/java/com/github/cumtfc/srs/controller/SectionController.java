@@ -37,6 +37,11 @@ public class SectionController {
         return ResponseEntity.ok(sectionService.getTeacherSectionAvailable());
     }
 
+    @GetMapping(value = "student/available")
+    public ResponseEntity getStudentAvailableSections(){
+        return ResponseEntity.ok(sectionService.getStudentSectionAvailable());
+    }
+
     @PostMapping(value = "choose")
     public ResponseEntity chooseSection(@CurrentUser SysUser sysUser, @RequestBody Section section) {
         return ResponseEntity.ok(sectionService.chooseOneSection(sysUser.getTeacher(), section));
@@ -51,4 +56,10 @@ public class SectionController {
     public ResponseEntity deleteOneSection(@PathVariable Integer id) {
         return ResponseEntity.ok(sectionService.deleteOneById(id));
     }
+
+    @DeleteMapping(value = "my/{id}")
+    public ResponseEntity deleteOneSelectedSection(@PathVariable Integer id) {
+        return ResponseEntity.ok(sectionService.unChooseOneSection(id));
+    }
+
 }

@@ -15,8 +15,9 @@ export class StudentSelectionComponent implements OnInit {
 
   @ViewChild('st') st: SimpleTableComponent;
   columns: SimpleTableColumn[] = [
-    {title: '课程编号', index: 'courseSn'},
+    {title: '排课号', index: 'sectionSn'},
     {title: '课程名', index: 'courseName'},
+    {title: '教师', index: 'teacherName'},
     {title: '学分', index: 'credit'},
     {title: '教室', index: 'room'},
     {title: '周次', index: 'dayOfWeek'},
@@ -38,15 +39,15 @@ export class StudentSelectionComponent implements OnInit {
   }
 
   reloadData() {
-    const url = `selections`;
+    const url = `transcripts/my`;
     this.http.get(url).subscribe((data: any) => {
       this.dataSet = data;
-    })
+    });
   }
 
 
   delete(record) {
-    const url = `selections/${record.id}`;
+    const url = `transcripts/${record.id}`;
     this.http.delete(url).subscribe(() => {
       this.reloadData();
     })

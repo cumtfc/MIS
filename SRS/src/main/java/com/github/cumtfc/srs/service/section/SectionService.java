@@ -49,6 +49,26 @@ public interface SectionService {
      */
     String getTeacherSectionAvailable();
 
+    /**
+     * 查询学生可选课列表
+     *
+     * @return 查询结果
+     */
+    String getStudentSectionAvailable();
+
+    /**
+     * 教师新增一条选课记录
+     * @param section 当前要选的section
+     * @param teacher 当前登陆的teacher
+     * @return 保存后的section记录
+     */
     Section chooseOneSection(Teacher teacher, Section section);
+
+    /**
+     * 老师退选一项Section
+     * @param sectionID 要退选的section的id
+     * @return 操作结果
+     */
+    boolean unChooseOneSection(Integer sectionID);
 
 }

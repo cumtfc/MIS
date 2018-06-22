@@ -39,7 +39,7 @@ public class SectionCatalog {
             objectNode.put("courseSn", section.getCourse().getCourseSn());
             objectNode.put("courseName", section.getCourse().getCourseName());
             objectNode.put("credit", section.getCourse().getCredit());
-            objectNode.put("capacityWithFraction", size + "/" + section.getCapacity());
+            objectNode.put("capacityWithFraction", section.getCapacity()-size + "/" + section.getCapacity());
             arrayNode.add(objectNode);
         }
         return arrayNode.toString();
