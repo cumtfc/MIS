@@ -32,13 +32,12 @@ public class Section implements Serializable {
 
     private Integer capacity;
 
-    @JsonManagedReference
-    private Course course
-        ;
-    @JsonManagedReference
+    @JsonBackReference(value = "course-section")
+    private Course course;
+    @JsonBackReference(value = "teacher-section")
     private Teacher teacher;
 
-    @JsonBackReference
+    @JsonManagedReference(value = "transcripts-section")
     private List<Transcript> transcripts;
 
 
@@ -85,7 +84,7 @@ public class Section implements Serializable {
         this.capacity = capacity;
     }
 
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     public Course getCourse() {
         return course;

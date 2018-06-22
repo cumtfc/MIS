@@ -2,6 +2,7 @@ package com.github.cumtfc.srs.po.course;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.cumtfc.srs.po.section.Section;
 
 import javax.persistence.*;
@@ -27,7 +28,7 @@ public class Course implements Serializable {
 
     private List<Course> prevCourses;
 
-    @JsonBackReference
+    @JsonManagedReference(value = "course-section")
     private List<Section> sections;
 
 

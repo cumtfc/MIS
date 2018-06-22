@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author 冯楚
@@ -25,5 +26,19 @@ public class SectionServiceImpl implements SectionService {
     public String findAll() {
         List<Section> all = sectionRepository.findAll();
         return catalog.toJSON(all);
+    }
+
+    @Override
+    public Section saveOne(Section section) {
+        if (section.getSectionSn()==null) {
+            section.setSectionSn(UUID.randomUUID().toString());
+        }
+        return sectionRepository.save(section);
+    }
+
+    @Override
+    public boolean deleteOneById(Integer id) {
+        sectionRepository.deleteById(id);
+        return true;
     }
 }
