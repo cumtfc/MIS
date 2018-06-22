@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 public class SectionCatalog {
 
-    public String toJSON(List<Section> sections) {
+    public String getCourseArrangeJson(List<Section> sections) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode arrayNode = mapper.createArrayNode();
         for (Section section : sections) {
@@ -27,5 +27,26 @@ public class SectionCatalog {
             arrayNode.add(objectNode);
         }
         return arrayNode.toString();
+    }
+
+    public String getSectionJson(List<Section> sections) {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
+        for (Section section : sections) {
+            ObjectNode objectNode = mapper.convertValue(section, ObjectNode.class);
+            int size = section.getTranscripts().size();
+            objectNode.put("courseId", section.getCourse().getId());
+            objectNode.put("courseSn", section.getCourse().getCourseSn());
+            objectNode.put("courseName", section.getCourse().getCourseName());
+            objectNode.put("credit", section.getCourse().getCredit());
+            objectNode.put("capacityWithFraction", size + "/" + section.getCapacity());
+            arrayNode.add(objectNode);
+        }
+        return arrayNode.toString();
+    }
+
+    public List<Section> getTeacherSectionAvailable(List<Section> sections){
+        sections.removeIf(section -> section.getTeacher() != null);
+        return sections;
     }
 }

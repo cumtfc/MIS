@@ -1,34 +1,31 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {_HttpClient, ModalHelper} from '@delon/theme';
 import {SimpleTableColumn, SimpleTableComponent} from '@delon/abc';
+import {StudentSelectionEditComponent} from "./edit/edit.component";
 import {filter} from "rxjs/operators";
-import {TeacherSectionEditComponent} from "./edit/edit.component";
-import {TeacherSectionViewComponent} from "./view/view.component";
 
 @Component({
-  selector   : 'app-teacher-section',
-  templateUrl: './section.component.html',
+  selector   : 'app-student-selection',
+  templateUrl: './selection.component.html',
 })
-export class TeacherSectionComponent implements OnInit {
+export class StudentSelectionComponent implements OnInit {
 
   params: any = {};
   dataSet: any[] = [];
 
   @ViewChild('st') st: SimpleTableComponent;
   columns: SimpleTableColumn[] = [
-    {title: '排课号', index: 'sectionSn'},
     {title: '课程编号', index: 'courseSn'},
     {title: '课程名', index: 'courseName'},
     {title: '学分', index: 'credit'},
     {title: '教室', index: 'room'},
     {title: '周次', index: 'dayOfWeek'},
     {title: '时间', index: 'timeOfDay'},
-    {title: '容量', index: 'capacityWithFraction'},
+    {title: '状态', index: 'state'},//state有选课成功和等待队列两种状态
     {
       title  : '',
       buttons: [
-        {text: '查看', type: 'none', click: (record) => this.view(record)},
-        {text: '删除', type: 'del', click: (record) => this.delete(record)}
+        {text: '退选', type: 'del', click: (record) => this.delete(record)}
       ]
     }
   ];
@@ -41,21 +38,15 @@ export class TeacherSectionComponent implements OnInit {
   }
 
   reloadData() {
-    const url = `sections/my`;
+    const url = `selections`;
     this.http.get(url).subscribe((data: any) => {
       this.dataSet = data;
-    });
+    })
   }
 
-  view(record) {
-    this.modal
-    .static(TeacherSectionViewComponent, {record: record, i: record})
-    .pipe(filter(w => w === true))
-    .subscribe(() => this.reloadData());
-  }
 
   delete(record) {
-    const url = `sections/my/${record.id}`;
+    const url = `selections/${record.id}`;
     this.http.delete(url).subscribe(() => {
       this.reloadData();
     })
@@ -63,9 +54,9 @@ export class TeacherSectionComponent implements OnInit {
 
   add() {
     this.modal
-    .static(TeacherSectionEditComponent, {i: {}})
+    .static(StudentSelectionEditComponent, {i: {}})
     .pipe(filter(w => w === true))
-    .subscribe(() => this.reloadData());
+    .subscribe(() => this.st.reload());
   }
 
 }

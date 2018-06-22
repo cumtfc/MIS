@@ -5,11 +5,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {SimpleTableColumn, SimpleTableComponent} from "@delon/abc";
 
   @Component({
-    selector: 'app-teacher-section-edit',
+    selector: 'app-student-selection-edit',
     templateUrl: './edit.component.html',
   })
-  export class TeacherSectionEditComponent implements OnInit {
-    record: any = {};
+  export class StudentSelectionEditComponent implements OnInit {
+
     dataSet: any[] = [];
     params: any = {};
     @ViewChild('st') st: SimpleTableComponent;
@@ -41,15 +41,14 @@ import {SimpleTableColumn, SimpleTableComponent} from "@delon/abc";
     }
 
     reloadData() {
-      const url = `sections/teacher/available`;
+      const url = `sections/student/available`;
       this.http.get(url).subscribe((data: any) => {
         this.dataSet = data;
-        console.log(this.dataSet);
       });
     }
 
     private choose(record) {
-      const url = `sections/choose`;
+      const url = `selections`;
       this.http.post(url,record).subscribe((data: any) => {
         this.msgSrv.success('选课成功');
         this.reloadData();
