@@ -40,7 +40,7 @@ import {SimpleTableColumn, SimpleTableComponent} from "@delon/abc";
     }
 
     reloadData() {
-      const url = `sections/available`;
+      const url = `sections/teacher/available`;
       this.http.get(url).subscribe((data: any) => {
         this.dataSet = data;
       });
