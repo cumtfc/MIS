@@ -1,11 +1,10 @@
 package com.github.cumtfc.srs.controller;
 
+import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.service.section.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
@@ -25,4 +24,13 @@ public class SectionController {
         return ResponseEntity.ok(sectionService.findAll());
     }
 
+    @PostMapping(value = "")
+    public ResponseEntity saveOneSection(@RequestBody Section section){
+        return ResponseEntity.ok(sectionService.saveOne(section));
+    }
+
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity deleteOneSection(@PathVariable Integer id){
+        return ResponseEntity.ok(sectionService.deleteOneById(id));
+    }
 }

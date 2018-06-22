@@ -2,6 +2,7 @@ package com.github.cumtfc.srs.po.teacher;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.user.SysUser;
 
@@ -28,7 +29,7 @@ public class Teacher  implements Serializable {
 
     private String name;
 
-    @JsonBackReference
+    @JsonManagedReference(value = "teacher-section")
     private List<Section> sections;
 
     private SysUser user;

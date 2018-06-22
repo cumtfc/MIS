@@ -16,4 +16,18 @@ public interface SectionService {
      */
     String findAll();
 
+    /**
+     * 保存一条section记录
+     * @param  section 要保存的记录
+     * @return 保存后的记录
+     */
+    Section saveOne(Section section);
+
+    /**
+     * 根据id删除一条记录
+     * @param id 要删除记录的id
+     * @return 操作结果
+     */
+    boolean deleteOneById(Integer id);
+
 }

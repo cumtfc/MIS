@@ -1,5 +1,6 @@
 package com.github.cumtfc.srs.po.transcript;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.student.Student;
@@ -15,7 +16,7 @@ public class Transcript {
 
     private Integer id;
 
-    @JsonManagedReference
+    @JsonBackReference(value = "transcripts-section")
     private Section section;
 
     private Student student;
