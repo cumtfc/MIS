@@ -2,6 +2,7 @@ package com.github.cumtfc.srs;
 
 import com.github.cumtfc.srs.application.DemoApplication;
 import com.github.cumtfc.srs.dao.CourseRepository;
+import com.github.cumtfc.srs.dao.StudentRepository;
 import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.service.course.CourseService;
 import org.junit.Test;
@@ -27,6 +28,9 @@ public class DemoApplicationTests {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    StudentRepository studentRepository;
+
     @Test
     public void testSaveCourse() {
         Course course = courseRepository.findById(8).get();
@@ -36,6 +40,13 @@ public class DemoApplicationTests {
         list.add(course1);
         course.setPrevCourses(list);
         courseService.saveOne(course);
+    }
+
+    @Test
+    public void  testStudentRepository(){
+        Course course = new Course();
+        course.setId(10);
+        System.out.println(studentRepository.existsByIdEqualsAndStudyPlanContains(1, course));
     }
 
 }

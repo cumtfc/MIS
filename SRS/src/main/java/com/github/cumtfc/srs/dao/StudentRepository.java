@@ -1,5 +1,6 @@
 package com.github.cumtfc.srs.dao;
 
+import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.po.student.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -9,8 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface StudentRepository extends JpaRepository<Student,Integer> {
 
-
-
+    boolean existsByIdEqualsAndStudyPlanContains(Integer id, Course course);
 
 
 }

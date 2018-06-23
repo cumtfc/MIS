@@ -8,6 +8,7 @@ import com.github.cumtfc.srs.po.section.Section;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 冯楚
@@ -84,5 +85,41 @@ public class Course implements Serializable {
 
     public void setSections(List<Section> sections) {
         this.sections = sections;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+            "id=" + id +
+            ", courseSn='" + courseSn + '\'' +
+            ", courseName='" + courseName + '\'' +
+            ", credit=" + credit +
+            ", prevCourses=" + prevCourses +
+            ", sections=" + sections +
+            '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Course)) {
+            return false;
+        }
+
+        Course course = (Course) o;
+
+        if (!getId().equals(course.getId())) {
+            return false;
+        }
+        return getCourseSn().equals(course.getCourseSn());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getCourseSn().hashCode();
+        return result;
     }
 }

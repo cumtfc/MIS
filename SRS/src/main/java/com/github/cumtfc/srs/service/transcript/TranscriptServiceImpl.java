@@ -1,5 +1,6 @@
 package com.github.cumtfc.srs.service.transcript;
 
+import com.github.cumtfc.srs.component.TranscriptFactory;
 import com.github.cumtfc.srs.dao.SysUserRepository;
 import com.github.cumtfc.srs.dao.TranscriptRepository;
 import com.github.cumtfc.srs.domain.TranscriptCatalog;
@@ -18,11 +19,12 @@ public class TranscriptServiceImpl implements TranscriptService {
 
     @Autowired
     TranscriptRepository transcriptRepository;
-
     @Autowired
     SysUserRepository sysUserRepository;
     @Autowired
     TranscriptCatalog catalog;
+    @Autowired
+    TranscriptFactory transcriptFactory;
 
     @Override
     public String findAllByStudentJson(Student student) {
@@ -31,7 +33,7 @@ public class TranscriptServiceImpl implements TranscriptService {
 
     @Override
     public Transcript chooseOneSection(Student student, Section section) {
-        Transcript transcript = new Transcript(section,student);
+        Transcript transcript = transcriptFactory.getTranscript(student,section);
         return transcriptRepository.save(transcript);
     }
 }
