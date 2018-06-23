@@ -21,7 +21,7 @@ import {SimpleTableColumn, SimpleTableComponent} from "@delon/abc";
       {title: '教室', index: 'room'},
       {title: '周次', index: 'dayOfWeek'},
       {title: '时间', index: 'timeOfDay'},
-      {title: '容量', index: 'capacity'},
+      {title: '容量', index: 'capacityWithFraction'},
       {
         title  : '',
         buttons: [
@@ -48,12 +48,11 @@ import {SimpleTableColumn, SimpleTableComponent} from "@delon/abc";
     }
 
     private choose(record) {
-      const url = `selections`;
+      const url = `transcripts`;
       this.http.post(url,record).subscribe((data: any) => {
         this.msgSrv.success('选课成功');
         this.reloadData();
       });
-      // console.log(record)
     }
 
     close() {

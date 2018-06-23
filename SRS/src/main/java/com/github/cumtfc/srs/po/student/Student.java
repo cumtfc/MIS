@@ -1,6 +1,6 @@
 package com.github.cumtfc.srs.po.student;
 
-import com.github.cumtfc.srs.po.section.Section;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.po.transcript.Transcript;
 import com.github.cumtfc.srs.po.user.SysUser;
@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2018/6/8-19:12
  */
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames = {"studentSn"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"studentSn"}))
 public class Student implements Serializable {
 
     private Integer id;
@@ -29,8 +29,7 @@ public class Student implements Serializable {
 
     private List<Course> studyPlan;
 
-    private List<Section> sections;
-
+    @JsonManagedReference(value = "transcripts-student")
     private List<Transcript> transcripts;
 
     private SysUser user;
@@ -77,8 +76,8 @@ public class Student implements Serializable {
         this.degree = degree;
     }
 
-    @ManyToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY)
-    @JoinColumn(name = "studentId",referencedColumnName = "courseId")
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "studentId", referencedColumnName = "courseId")
     public List<Course> getStudyPlan() {
         return studyPlan;
     }
@@ -87,16 +86,7 @@ public class Student implements Serializable {
         this.studyPlan = studyPlan;
     }
 
-    @OneToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY,mappedBy = "teacher")
-    public List<Section> getSections() {
-        return sections;
-    }
-
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
-    }
-
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "student")
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "student")
     public List<Transcript> getTranscripts() {
         return transcripts;
     }
@@ -106,7 +96,7 @@ public class Student implements Serializable {
     }
 
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId",referencedColumnName = "id")
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     public SysUser getUser() {
         return user;
     }

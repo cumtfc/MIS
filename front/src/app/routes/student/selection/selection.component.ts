@@ -56,7 +56,6 @@ export class StudentSelectionComponent implements OnInit {
   add() {
     this.modal
     .static(StudentSelectionEditComponent, {i: {}})
-    .pipe(filter(w => w === true))
     .subscribe(() => this.st.reload());
   }
 

@@ -19,9 +19,18 @@ public class Transcript {
     @JsonBackReference(value = "transcripts-section")
     private Section section;
 
+    @JsonBackReference(value = "transcripts-student")
     private Student student;
 
     private Integer grade;
+
+    public Transcript() {
+    }
+
+    public Transcript(Section section, Student student) {
+        this.section = section;
+        this.student = student;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -33,7 +42,7 @@ public class Transcript {
         this.id = id;
     }
 
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     public Section getSection() {
         return section;
@@ -44,7 +53,7 @@ public class Transcript {
         this.section = section;
     }
 
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     public Student getStudent() {
         return student;
