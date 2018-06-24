@@ -76,7 +76,7 @@ public class Student implements Serializable {
         this.degree = degree;
     }
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "studentId", referencedColumnName = "courseId")
     public List<Course> getStudyPlan() {
         return studyPlan;
@@ -86,7 +86,7 @@ public class Student implements Serializable {
         this.studyPlan = studyPlan;
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "student")
+    @OneToMany(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY, mappedBy = "student")
     public List<Transcript> getTranscripts() {
         return transcripts;
     }

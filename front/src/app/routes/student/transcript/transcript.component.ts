@@ -9,41 +9,34 @@ import { SFSchema } from '@delon/form';
   templateUrl: './transcript.component.html',
 })
 export class StudentTranscriptComponent implements OnInit {
+  params: any = {};
+  dataSet: any[] = [];
 
-    params: any = {};
-    url = `/user`;
-    searchSchema: SFSchema = {
-      properties: {
-        no: {
-          type: 'string',
-          title: '编号'
-        }
-      }
-    };
-    @ViewChild('st') st: SimpleTableComponent;
-    columns: SimpleTableColumn[] = [
-      { title: '编号', index: 'no' },
-      { title: '调用次数', type: 'number', index: 'callNo' },
-      { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-      { title: '时间', type: 'date', index: 'updatedAt' },
-      {
-        title: '',
-        buttons: [
-          // { text: '查看', click: (item: any) => `/form/${item.id}` },
-          // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-        ]
-      }
-    ];
+  @ViewChild('st') st: SimpleTableComponent;
+  columns: SimpleTableColumn[] = [
+    {title: '排课号', index: 'sectionSn'},
+    {title: '课程名', index: 'courseName'},
+    {title: '教师', index: 'teacherName'},
+    {title: '学分', index: 'credit'},
+    {title: '教室', index: 'room'},
+    {title: '周次', index: 'dayOfWeek'},
+    {title: '时间', index: 'timeOfDay'},
+    {title: '状态', index: 'state'},//state有选课成功和等待队列两种状态
+    {title: '成绩', index: 'grade'}
+  ];
 
-    constructor(private http: _HttpClient, private modal: ModalHelper) { }
+  constructor(private http: _HttpClient, private modal: ModalHelper) {
+  }
 
-    ngOnInit() { }
+  ngOnInit() {
+    this.reloadData();
+  }
 
-    add() {
-      // this.modal
-      //   .static(WareEditComponent, { i: { id: 0 } })
-      //   .pipe(filter(w => w === true))
-      //   .subscribe(() => this.st.reload());
-    }
+  reloadData() {
+    const url = `transcripts/my`;
+    this.http.get(url).subscribe((data: any) => {
+      this.dataSet = data;
+    });
+  }
 
 }

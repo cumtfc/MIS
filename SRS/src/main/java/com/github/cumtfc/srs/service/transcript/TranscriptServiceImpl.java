@@ -1,5 +1,6 @@
 package com.github.cumtfc.srs.service.transcript;
 
+import com.github.cumtfc.srs.dao.SectionRepository;
 import com.github.cumtfc.srs.dao.SysUserRepository;
 import com.github.cumtfc.srs.dao.TranscriptRepository;
 import com.github.cumtfc.srs.domain.TranscriptCatalog;
@@ -8,6 +9,9 @@ import com.github.cumtfc.srs.po.student.Student;
 import com.github.cumtfc.srs.po.transcript.Transcript;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author 冯楚
@@ -20,12 +24,14 @@ public class TranscriptServiceImpl implements TranscriptService {
     TranscriptRepository transcriptRepository;
     @Autowired
     SysUserRepository sysUserRepository;
+    @Autowired
+    SectionRepository sectionRepository;
 
     private final TranscriptCatalog catalog = TranscriptCatalog.getInstance();
 
     @Override
     public String findAllByStudentJson(Student student) {
-        return catalog.getTranscriptJson(transcriptRepository.getTranscriptsByStudentEquals(student));
+        return catalog.getTranscriptJsonForStudent(transcriptRepository.getTranscriptsByStudentEquals(student));
     }
 
     /**
@@ -49,5 +55,27 @@ public class TranscriptServiceImpl implements TranscriptService {
     public boolean unChooseOneSection(Integer id) {
         transcriptRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public String getTranscriptsBySectionId(Integer sectionId) {
+        Optional<Section> byId = sectionRepository.findById(sectionId);
+        Section section;
+        if (byId.isPresent()) {
+            section = byId.get();
+            List<Transcript> transcripts = section.getTranscripts();
+            if (transcripts.size() > section.getCapacity()) {
+                transcripts = transcripts.subList(0, section.getCapacity() - 1);
+            }
+            return catalog.getTranscriptJsonForTeacher(transcripts);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String updateTranscripts(List<Transcript> transcripts) {
+        List<Transcript> saveEd = transcriptRepository.saveAll(transcripts);
+        return catalog.getTranscriptJsonForTeacher(saveEd);
     }
 }

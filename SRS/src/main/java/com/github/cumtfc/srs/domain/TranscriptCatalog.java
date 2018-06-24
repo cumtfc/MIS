@@ -15,7 +15,7 @@ public class TranscriptCatalog {
 
     private static final TranscriptCatalog INSTANCE = new TranscriptCatalog();
 
-    public String getTranscriptJson(List<Transcript> transcripts) {
+    public String getTranscriptJsonForStudent(List<Transcript> transcripts) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode arrayNode = mapper.createArrayNode();
         for (Transcript transcript : transcripts) {
@@ -43,6 +43,28 @@ public class TranscriptCatalog {
         }
         return arrayNode.toString();
     }
+
+    public String getTranscriptJsonForTeacher(List<Transcript> transcripts) {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
+        for (Transcript transcript : transcripts) {
+            ObjectNode objectNode = mapper.convertValue(transcript, ObjectNode.class);
+            objectNode.put("name", transcript.getStudent().getName());
+            objectNode.put("studentSn", transcript.getStudent().getStudentSn());
+            objectNode.put("major", transcript.getStudent().getMajor());
+            objectNode.put("degree", transcript.getStudent().getDegree());
+            objectNode.put("grade", transcript.getGrade());
+            ObjectNode student = mapper.createObjectNode();
+            student.put("id", transcript.getStudent().getId());
+            objectNode.set("student", student);
+            ObjectNode section = mapper.createObjectNode();
+            section.put("id", transcript.getSection().getId());
+            objectNode.set("section", section);
+            arrayNode.add(objectNode);
+        }
+        return arrayNode.toString();
+    }
+
 
     public static TranscriptCatalog getInstance() {
         return INSTANCE;

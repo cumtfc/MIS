@@ -39,4 +39,9 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("login_failure")
+    public ResponseEntity loginFailurePage() {
+        return ResponseEntity.status(401).build();
+    }
+
 }

@@ -4,6 +4,8 @@ import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.student.Student;
 import com.github.cumtfc.srs.po.transcript.Transcript;
 
+import java.util.List;
+
 /**
  * @author 冯楚
  * @date 2018/6/8-19:12
@@ -26,6 +28,20 @@ public interface TranscriptService {
      */
     String chooseOneSection(Student student, Section section);
 
+    /**
+     * 退选一门课
+     * @param id 要退选的课程对应的transcript.Id
+     * @return 操作结果
+     */
     boolean unChooseOneSection(Integer id);
+
+    /**
+     * 根据sectionId获取所有transcript记录，忽略waitingList中的数据
+     * @param sectionId sectionId
+     * @return json格式数据
+     */
+    String getTranscriptsBySectionId(Integer sectionId);
+
+    String updateTranscripts(List<Transcript> transcripts);
 
 }

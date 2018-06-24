@@ -1,23 +1,25 @@
 <div class="modal-header">
   <div class="modal-title">{{ record.sectionSn }}选课学生</div>
 </div>
-<simple-table #st [data]="dataSet" [columns]="columns" [extraParams]="params"></simple-table>
+<simple-table #st [data]="dataSet" [columns]="columns" [extraParams]="params">
+  <ng-template st-row="custom" let-data let-index="index" let-column="grade">
+    <td>
+      <div class="editable-cell">
+        <div class="editable-cell-text-wrapper">
+          <ng-container *ngIf="!editCache[data.id].edit">
+            <span>{{data.grade}}</span>
+            <i class="anticon anticon-edit editable-cell-icon" (click)="startEdit(data.id)"></i>
+          </ng-container>
+          <ng-container *ngIf="editCache[data.id].edit">
+            <input type="text" nz-input [(ngModel)]="editCache[data.id].grade">
+            <i class="anticon anticon-check editable-cell-icon-check" (click)="finishEdit(data.id)"></i>
+          </ng-container>
+        </div>
+      </div>
+    </td>
+  </ng-template>
+</simple-table>
 <div class="modal-footer">
+  <button nz-button [nzType]="'primary'" (click)="saveAll()" [nzLoading]="http.loading">保存</button>
   <button nz-button type="button" (click)="close()">关闭</button>
 </div>
-<ng-template #grade st-row="custom" let-data let-index="index" let-column="column">
-  <td>
-    <div class="editable-cell">
-      <div class="editable-cell-text-wrapper">
-        <ng-container *ngIf="!editCache[data.id].edit">
-          {{data.grade}}
-          <i class="anticon anticon-edit editable-cell-icon" (click)="startEdit(data.id)"></i>
-        </ng-container>
-        <ng-container *ngIf="editCache[data.id].edit">
-          <input type="text" nz-input [(ngModel)]="editCache[data.id].grade">
-          <i class="anticon anticon-check editable-cell-icon-check" (click)="finishEdit(data.id)"></i>
-        </ng-container>
-      </div>
-    </div>
-  </td>
-</ng-template>

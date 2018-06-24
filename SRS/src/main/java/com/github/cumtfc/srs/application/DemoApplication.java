@@ -95,8 +95,8 @@ public class DemoApplication implements WebMvcConfigurer {
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
                 .anyRequest().authenticated()
-                .and().formLogin().successForwardUrl("/auth/login_success").permitAll().and()
-                .logout().deleteCookies().logoutSuccessUrl("/auth/logout_success").permitAll()
+                .and().formLogin().successForwardUrl("/auth/login_success").failureForwardUrl("/auth/login_failure").permitAll()
+                .and().logout().deleteCookies().logoutSuccessUrl("/auth/logout_success").permitAll()
                 .and().exceptionHandling().authenticationEntryPoint(loginUrlAuthenticationEntryPoint())
                 .and().cors().and().csrf().disable();
         }

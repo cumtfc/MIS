@@ -8,7 +8,7 @@ const routes: Routes = [
 
   { path: 'study-plan', component: StudentStudyPlanComponent },
   { path: 'course-selection', component: StudentSelectionComponent },
-  { path: 'transcript', component: StudentTranscriptComponent }];
+  { path: 'score-query', component: StudentTranscriptComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
