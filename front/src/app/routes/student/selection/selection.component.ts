@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {_HttpClient, ModalHelper} from '@delon/theme';
 import {SimpleTableColumn, SimpleTableComponent} from '@delon/abc';
 import {StudentSelectionEditComponent} from "./edit/edit.component";
-import {filter} from "rxjs/operators";
 
 @Component({
   selector   : 'app-student-selection',
@@ -56,7 +55,7 @@ export class StudentSelectionComponent implements OnInit {
   add() {
     this.modal
     .static(StudentSelectionEditComponent, {i: {}})
-    .subscribe(() => this.st.reload());
+    .subscribe(() => this.reloadData());
   }
 
 }

@@ -2,6 +2,7 @@ package com.github.cumtfc.srs.domain;
 
 import com.github.cumtfc.srs.po.user.SysUser;
 import org.springframework.stereotype.Component;
+import sun.security.jca.GetInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,9 @@ import java.util.List;
  * @author 冯楚
  * @date 2018/6/8-19:12
  */
-@Component
 public class Menu {
+
+    private static final Menu INSTANCE = new Menu();
 
     public List<MenuItem> getMenus(SysUser sysUser) {
         List<MenuItem> menu = new ArrayList<>();
@@ -29,6 +31,13 @@ public class Menu {
         return menu;
     }
 
+    public static Menu getInstance() {
+        return INSTANCE;
+    }
+
+    private Menu() {
+    }
+
     public class MenuItem {
 
         private String text;
@@ -37,7 +46,7 @@ public class Menu {
 
         private String icon;
 
-        MenuItem(String text, String link, String icon) {
+        private MenuItem(String text, String link, String icon) {
             this.text = text;
             this.link = link;
             this.icon = icon;

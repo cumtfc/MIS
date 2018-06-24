@@ -12,8 +12,9 @@ import java.util.List;
  * @author 冯楚
  * @date 2018/6/8-19:12
  */
-@Component
 public class SectionCatalog {
+
+    private static final SectionCatalog INSTANCE = new SectionCatalog();
 
     public String getCourseArrangeJson(List<Section> sections) {
         ObjectMapper mapper = new ObjectMapper();
@@ -48,5 +49,12 @@ public class SectionCatalog {
     public List<Section> getTeacherSectionAvailable(List<Section> sections){
         sections.removeIf(section -> section.getTeacher() != null);
         return sections;
+    }
+
+    public static SectionCatalog getInstance() {
+        return INSTANCE;
+    }
+
+    private SectionCatalog() {
     }
 }

@@ -50,7 +50,8 @@ import {SimpleTableColumn, SimpleTableComponent} from "@delon/abc";
     private choose(record) {
       const url = `transcripts`;
       this.http.post(url,record).subscribe((data: any) => {
-        this.msgSrv.success('选课成功');
+        console.log(data);
+        this.msgSrv.success(data.msg);
         this.reloadData();
       });
     }

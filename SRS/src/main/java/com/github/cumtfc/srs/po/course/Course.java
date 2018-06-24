@@ -78,7 +78,7 @@ public class Course implements Serializable {
         this.courseSn = courseSn;
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY,mappedBy = "course")
+    @OneToMany(cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY,mappedBy = "course")
     public List<Section> getSections() {
         return sections;
     }

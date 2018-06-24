@@ -18,6 +18,14 @@ public interface TranscriptService {
      */
     String findAllByStudentJson(Student student);
 
-    Transcript chooseOneSection(Student student, Section section);
+    /**
+     * 选一门课
+     * @param student 选课学生
+     * @param section 要选的section
+     * @return 操作结果json格式形如@example:`{'msg':'操作成功'}`
+     */
+    String chooseOneSection(Student student, Section section);
+
+    boolean unChooseOneSection(Integer id);
 
 }

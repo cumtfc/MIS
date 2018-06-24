@@ -17,9 +17,9 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
-    CourseRepository courseRepository;
-    @Autowired
-    CourseCatalog catalog;
+    private CourseRepository courseRepository;
+
+    private final CourseCatalog catalog = CourseCatalog.getInstance();
 
     @Override
     public String findAllInJson() {

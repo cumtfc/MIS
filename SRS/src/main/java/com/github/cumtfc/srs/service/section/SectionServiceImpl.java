@@ -26,8 +26,13 @@ public class SectionServiceImpl implements SectionService {
     @Autowired
     SysUserRepository sysUserRepository;
 
-    @Autowired
-    SectionCatalog catalog;
+    private final SectionCatalog catalog=SectionCatalog.getInstance();
+
+    @Override
+    public Section findById(Integer id) {
+        Optional<Section> byId = sectionRepository.findById(id);
+        return byId.orElse(null);
+    }
 
     @Override
     public String findAll() {

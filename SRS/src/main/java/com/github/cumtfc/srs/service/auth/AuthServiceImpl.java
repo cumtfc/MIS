@@ -16,8 +16,7 @@ import java.util.List;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    Menu menu;
+    private final Menu menu = Menu.getInstance();
 
     @Override
     public String init(SysUser sysUser) {

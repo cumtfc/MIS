@@ -22,6 +22,8 @@ public class TranscriptController {
     @Autowired
     TranscriptService transcriptService;
     @Autowired
+    SectionService sectionService;
+    @Autowired
     SysUserService sysUserService;
 
     @GetMapping(value = "my")
@@ -33,7 +35,13 @@ public class TranscriptController {
     @PostMapping(value = "")
     public ResponseEntity chooseOneSection(@CurrentUser SysUser sysUser,@RequestBody Section section){
         sysUser = sysUserService.refreshSysUser(sysUser);
+        section = sectionService.findById(section.getId());
         return ResponseEntity.ok(transcriptService.chooseOneSection(sysUser.getStudent(),section));
+    }
+
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity unChooseOneSection(@PathVariable Integer id){
+        return ResponseEntity.ok(transcriptService.unChooseOneSection(id));
     }
 
 }

@@ -1,7 +1,10 @@
 package com.github.cumtfc.srs.po.transcript;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.github.cumtfc.srs.component.specification.PrevCourseSpecification;
+import com.github.cumtfc.srs.component.specification.SelectOnceSpecification;
+import com.github.cumtfc.srs.component.specification.Specification;
+import com.github.cumtfc.srs.component.specification.StudyPlanSpecification;
 import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.student.Student;
 
@@ -24,12 +27,31 @@ public class Transcript {
 
     private Integer grade;
 
+    private final Specification<Transcript> selectOnce = new SelectOnceSpecification();
+
+    private final Specification<Transcript> prevCourse = new PrevCourseSpecification();
+
+    private final Specification<Transcript> studyPlan = new StudyPlanSpecification();
+
     public Transcript() {
     }
 
     public Transcript(Section section, Student student) {
         this.section = section;
         this.student = student;
+    }
+
+    public String canChoose() {
+        if (!selectOnce.isSatisfiedBy(this)) {
+            return "{\"msg\":\"您已经选过这门课\"}";
+        }
+        if (!prevCourse.isSatisfiedBy(this)) {
+            return "{\"msg\":\"您必须先修完所有先修课\"}";
+        }
+        if (!studyPlan.isSatisfiedBy(this)) {
+            return "{\"msg\":\"选课不符合您的学习计划\"}";
+        }
+        return null;
     }
 
     @Id

@@ -11,6 +11,14 @@ import com.github.cumtfc.srs.po.user.SysUser;
 public interface SectionService {
 
     /**
+     * 根据id查section记录
+     *
+     * @param id section.id
+     * @return section对象
+     */
+    Section findById(Integer id);
+
+    /**
      * 查全部的section记录
      *
      * @return json格式
@@ -58,6 +66,7 @@ public interface SectionService {
 
     /**
      * 教师新增一条选课记录
+     *
      * @param section 当前要选的section
      * @param teacher 当前登陆的teacher
      * @return 保存后的section记录
@@ -66,6 +75,7 @@ public interface SectionService {
 
     /**
      * 老师退选一项Section
+     *
      * @param sectionID 要退选的section的id
      * @return 操作结果
      */

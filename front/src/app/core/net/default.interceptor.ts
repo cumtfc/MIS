@@ -59,6 +59,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         }
         break;
     }
+    console.log(event)
     return of(event);
   }
 
