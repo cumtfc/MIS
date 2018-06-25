@@ -1,4 +1,4 @@
-package com.github.cumtfc.srs.component.specification;
+package com.github.cumtfc.srs.domain.specification;
 
 import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.po.transcript.Transcript;

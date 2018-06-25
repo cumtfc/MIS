@@ -1,10 +1,10 @@
 package com.github.cumtfc.srs.po.transcript;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.github.cumtfc.srs.component.specification.PrevCourseSpecification;
-import com.github.cumtfc.srs.component.specification.SelectOnceSpecification;
-import com.github.cumtfc.srs.component.specification.Specification;
-import com.github.cumtfc.srs.component.specification.StudyPlanSpecification;
+import com.github.cumtfc.srs.domain.specification.PrevCourseSpecification;
+import com.github.cumtfc.srs.domain.specification.SelectOnceSpecification;
+import com.github.cumtfc.srs.domain.specification.Specification;
+import com.github.cumtfc.srs.domain.specification.StudyPlanSpecification;
 import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.student.Student;
 

@@ -1,4 +1,4 @@
-package com.github.cumtfc.srs.component.specification;
+package com.github.cumtfc.srs.domain.specification;
 
 /**
  * @author 冯楚
