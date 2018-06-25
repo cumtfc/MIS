@@ -6,7 +6,8 @@
 ![image](images/%E7%94%A8%E4%BE%8B%E6%8F%8F%E8%BF%B0.png)
 ## 实现
 后端：SpringBoot(Spring,SpringMVC,SpringSecurity,Spring Data JPA)
-前端：Angular+ng-zorro+ng-alain
+
+前端：Angular+[ng-zorro](https://ng.ant.design/components/button/zh)+[ng-alain](https://ng-alain.com/)
 ## 项目结构
 ![image](images/分层图.png)
 ## 数据库结构
@@ -23,8 +24,7 @@
 ![image](images/教务排课2.png)
 ![image](images/教务排课.png)
 ### 教师选课
-![image](images/教务排课2.png)
-![image](images/教务排课.png)
+![image](images/教师选课.png)
 ### 学习计划
 ![image](images/学生选课-学习计划.png)
 ### 学生选课
