@@ -51,20 +51,19 @@ public class Transcript {
         if (!studyPlan.isSatisfiedBy(this)) {
             return "选课不符合您的学习计划";
         }
-
-        return "操作成功，等待同步结果";
+        return null;
     }
 
-    private enum CanChoose {
-        /**
-         * 表示可以选
-         */
-        SUCCESS("操作成功，等待同步结果"),
-        HASCHOSEN("您已经选过这门课"),
-        PREV_COURSE("您必须先修完所有先修课");
-
-        CanChoose(String s) {
-
+    public String state(){
+        if (this.getGrade() != null) {
+            return "已选";
+        }
+        int index = this.getSection().getTranscripts().indexOf(this);
+        Integer capacity = this.getSection().getCapacity();
+        if (index < capacity) {
+            return  "已选";
+        }else {
+            return "队列中";
         }
     }
 

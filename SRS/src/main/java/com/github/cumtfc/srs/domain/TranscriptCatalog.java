@@ -30,22 +30,14 @@ public class TranscriptCatalog {
             objectNode.put("timeOfDay", transcript.getSection().getTimeOfDay());
             if (transcript.getGrade() != null) {
                 objectNode.put("grade", transcript.getGrade());
-                objectNode.put("state", "已选");
-            } else {
-                int index = transcript.getSection().getTranscripts().indexOf(transcript);
-                Integer capacity = transcript.getSection().getCapacity();
-                if (index < capacity) {
-                    objectNode.put("state", "已选");
-                }else {
-                    objectNode.put("state", "队列中");
-                }
             }
+            objectNode.put("state", transcript.state());
             arrayNode.add(objectNode);
         }
         return arrayNode.toString();
     }
 
-    public String getTranscriptJsonBySection(Section section){
+    public String getTranscriptJsonBySection(Section section) {
         List<Transcript> transcripts = section.getTranscripts();
         if (transcripts.size() > section.getCapacity()) {
             transcripts = transcripts.subList(0, section.getCapacity());

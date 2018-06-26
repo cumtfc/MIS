@@ -48,6 +48,15 @@ public class Section implements Serializable {
     }
 
 
+    public int capacityLeft(){
+        int size = this.getTranscripts().size();
+        int left = this.getCapacity() - size;
+        if (left < 0) {
+            left = 0;
+        }
+        return left;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Integer getId() {

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.cumtfc.srs.po.section.Section;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -35,22 +34,17 @@ public class SectionCatalog {
         ArrayNode arrayNode = mapper.createArrayNode();
         for (Section section : sections) {
             ObjectNode objectNode = mapper.convertValue(section, ObjectNode.class);
-            int size = section.getTranscripts().size();
             objectNode.put("courseId", section.getCourse().getId());
             objectNode.put("courseSn", section.getCourse().getCourseSn());
             objectNode.put("courseName", section.getCourse().getCourseName());
             objectNode.put("credit", section.getCourse().getCredit());
-            int left = section.getCapacity() - size;
-            if (left < 0) {
-                left = 0;
-            }
-            objectNode.put("capacityWithFraction", left + "/" + section.getCapacity());
+            objectNode.put("capacityWithFraction", section.capacityLeft() + "/" + section.getCapacity());
             arrayNode.add(objectNode);
         }
         return arrayNode.toString();
     }
 
-    public List<Section> getTeacherSectionAvailable(List<Section> sections){
+    public List<Section> getTeacherSectionAvailable(List<Section> sections) {
         sections.removeIf(section -> section.getTeacher() != null);
         return sections;
     }
