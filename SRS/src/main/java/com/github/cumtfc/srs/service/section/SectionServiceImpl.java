@@ -42,9 +42,7 @@ public class SectionServiceImpl implements SectionService {
 
     @Override
     public Section saveOne(Section section) {
-        if (section.getSectionSn() == null) {
-            section.setSectionSn(UUID.randomUUID().toString().substring(0,8));
-        }
+        section.generateSectionSn();
         return sectionRepository.save(section);
     }
 

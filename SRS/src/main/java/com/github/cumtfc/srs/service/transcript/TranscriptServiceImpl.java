@@ -36,8 +36,7 @@ public class TranscriptServiceImpl implements TranscriptService {
 
     /**
      * 选课的场景类似秒杀，除了waitingList的实现外，还需要注意"超卖"问题 因为高并发，所以显然不能直接加锁. 经典的解决方案是带标记地更新库存容量
-     * 因为本身涉及waitingList，所以我这里的解决方案是只要过了选课校验就保存当前记录。
-     * 然后返回等待结果同步的提示信息，前端刷新数据，此时此条选课记录的index如果小于容量，则选课成功
+     * 因为本身涉及waitingList，所以我这里的解决方案是只要过了选课校验就保存当前记录。 然后返回等待结果同步的提示信息，前端刷新数据，此时此条选课记录的index如果小于容量，则选课成功
      * 否则直接视为在waitingList中，当前面有人退选时，记录删除，则后面的记录自然往上补齐。选课通道关闭时统一清除冗余的记录，并通知选课成功的人付费
      */
     @Override
@@ -48,7 +47,7 @@ public class TranscriptServiceImpl implements TranscriptService {
             transcriptRepository.save(transcript);
             return "{\"msg\":\"操作成功，等待同步结果\"}";
         } else {
-            return s;
+            return "{\"msg\":\"" + s + "\"}";
         }
     }
 
@@ -64,11 +63,7 @@ public class TranscriptServiceImpl implements TranscriptService {
         Section section;
         if (byId.isPresent()) {
             section = byId.get();
-            List<Transcript> transcripts = section.getTranscripts();
-            if (transcripts.size() > section.getCapacity()) {
-                transcripts = transcripts.subList(0, section.getCapacity());
-            }
-            return catalog.getTranscriptJsonForTeacher(transcripts);
+            return catalog.getTranscriptJsonBySection(section);
         } else {
             return null;
         }

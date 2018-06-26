@@ -10,6 +10,7 @@ import com.github.cumtfc.srs.po.teacher.Teacher;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author 冯楚
@@ -39,6 +40,12 @@ public class Section implements Serializable {
 
     @JsonManagedReference(value = "transcripts-section")
     private List<Transcript> transcripts;
+
+    public void generateSectionSn(){
+        if (getSectionSn() == null) {
+            setSectionSn(UUID.randomUUID().toString().substring(0,8));
+        }
+    }
 
 
     @Id

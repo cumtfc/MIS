@@ -43,15 +43,29 @@ public class Transcript {
 
     public String canChoose() {
         if (!selectOnce.isSatisfiedBy(this)) {
-            return "{\"msg\":\"您已经选过这门课\"}";
+            return "您已经选过这门课";
         }
         if (!prevCourse.isSatisfiedBy(this)) {
-            return "{\"msg\":\"您必须先修完所有先修课\"}";
+            return "您必须先修完所有先修课";
         }
         if (!studyPlan.isSatisfiedBy(this)) {
-            return "{\"msg\":\"选课不符合您的学习计划\"}";
+            return "选课不符合您的学习计划";
         }
-        return null;
+
+        return "操作成功，等待同步结果";
+    }
+
+    private enum CanChoose {
+        /**
+         * 表示可以选
+         */
+        SUCCESS("操作成功，等待同步结果"),
+        HASCHOSEN("您已经选过这门课"),
+        PREV_COURSE("您必须先修完所有先修课");
+
+        CanChoose(String s) {
+
+        }
     }
 
     @Id

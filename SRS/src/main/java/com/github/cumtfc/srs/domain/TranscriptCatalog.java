@@ -3,6 +3,7 @@ package com.github.cumtfc.srs.domain;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.transcript.Transcript;
 
 import java.util.List;
@@ -42,6 +43,14 @@ public class TranscriptCatalog {
             arrayNode.add(objectNode);
         }
         return arrayNode.toString();
+    }
+
+    public String getTranscriptJsonBySection(Section section){
+        List<Transcript> transcripts = section.getTranscripts();
+        if (transcripts.size() > section.getCapacity()) {
+            transcripts = transcripts.subList(0, section.getCapacity());
+        }
+        return getTranscriptJsonForTeacher(transcripts);
     }
 
     public String getTranscriptJsonForTeacher(List<Transcript> transcripts) {
