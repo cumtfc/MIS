@@ -26,7 +26,7 @@
 ### 教师选课
 ![image](images/教师选课.png)
 ### 学习计划
-![image](images/学生选课-学习计划.png)
+![image](images/学习计划.png)
 ### 学生选课
 #### WaitList
 ![image](images/学生选课-队列.png)
