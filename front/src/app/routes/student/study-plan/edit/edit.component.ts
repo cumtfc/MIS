@@ -9,7 +9,7 @@ import {SimpleTableColumn, SimpleTableComponent} from "@delon/abc";
 })
 export class StudentStudyPlanEditComponent implements OnInit {
   record: any = {};
-  i: any;
+  plan: any[];
 
   params: any = {};
   dataSet: any;
@@ -36,7 +36,15 @@ export class StudentStudyPlanEditComponent implements OnInit {
 
   ngOnInit(): void {
     const url = `courses`;
-    this.http.get(url).subscribe((data: any) => {
+    this.http.get(url).subscribe((data: any[]) => {
+      if (this.plan) {
+        this.plan.forEach(c=>{
+          let start = data.findIndex(t => t.id == c.id);
+          if (start > -1) {
+            data.splice(start, 1);
+          }
+        })
+      }
       this.dataSet = data;
     });
   }

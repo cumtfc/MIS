@@ -50,7 +50,7 @@ export class StudentStudyPlanComponent implements OnInit {
 
   edit() {
     this.modal
-      .static(StudentStudyPlanEditComponent)
+      .static(StudentStudyPlanEditComponent,{plan:this.dataSet})
       // .pipe(filter(w => w === true))
       .subscribe(() => this.reloadData());
   }
