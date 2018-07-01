@@ -57,6 +57,12 @@ export class StudentStudyPlanEditComponent implements OnInit {
     const url = `students/studyPlans`;
     this.http.post(url,record).subscribe((data: any) => {
       this.msgSrv.success('选课成功');
+      let start = this.dataSet.findIndex(t => t.id == record.id);
+      if (start > -1) {
+        this.dataSet.splice(start, 1);
+        this.st.reload();
+      }
+
     });
     // console.log(record)
   }
