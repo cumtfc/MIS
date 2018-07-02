@@ -12,8 +12,12 @@
 ![image](images/分层图.png)
 ## 数据库结构
 ![image](images/数据库结构.png)
-## 领域模型
+## 领域模型(总)
 ![image](images/类图.png)
+## 领域模型(repository)
+![image](images/类图-repository.png)
+## 领域模型(PO)
+![image](images/类图-po.png)
 ## 功能界面
 ### 登陆
 ![image](images/登陆.png)
@@ -40,3 +44,8 @@
 ![image](images/成绩录入.png)
 ### 成绩查询
 ![image](images/成绩查询.png)
+## 测试
+![image](images/测试-1.png)
+![image](images/测试-2.png)
+## Mock
+![image](images/mock.png)

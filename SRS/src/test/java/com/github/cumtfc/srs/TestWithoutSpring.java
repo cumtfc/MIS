@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.cumtfc.srs.po.course.Course;
+import com.github.cumtfc.srs.po.section.Section;
+import com.github.cumtfc.srs.po.student.Student;
+import com.github.cumtfc.srs.po.transcript.Transcript;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -16,6 +19,33 @@ import java.util.List;
  * @date 2018/6/8-19:12
  */
 public class TestWithoutSpring {
+
+    @Test
+    public void testTranscript() {
+        Course course = new Course();
+        course.setId(1);
+        course.setCourseName("Java");
+        course.setCredit(1);
+        course.setCourseSn("EC001");
+        course.setPrevCourses(new ArrayList<>());
+
+        Section section = new Section();
+        section.setCapacity(100);
+        section.setCourse(course);
+        List<Section> sectionList = new ArrayList<>();
+        sectionList.add(section);
+        course.setSections(sectionList);
+
+        Student student = new Student();
+        student.setId(21);
+        student.setTranscripts(new ArrayList<>());
+        List<Course> studyPlan = new ArrayList<>();
+//        studyPlan.add(course);
+        student.setStudyPlan(studyPlan);
+
+        Transcript transcript = new Transcript(section, student);
+        System.out.println(transcript.canChoose());
+    }
 
     @Test
     public void testJackson() {
