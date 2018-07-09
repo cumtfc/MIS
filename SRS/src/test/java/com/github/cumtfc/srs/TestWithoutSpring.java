@@ -27,7 +27,17 @@ public class TestWithoutSpring {
         course.setCourseName("Java");
         course.setCredit(1);
         course.setCourseSn("EC001");
-        course.setPrevCourses(new ArrayList<>());
+
+        Course course2 = new Course();
+        course2.setId(2);
+        course2.setCourseName("JavaWeb");
+        course2.setCredit(1);
+        course2.setCourseSn("EC002");
+
+        ArrayList<Course> prevCourses = new ArrayList<>();
+        prevCourses.add(course2);
+
+        course.setPrevCourses(prevCourses);
 
         Section section = new Section();
         section.setCapacity(100);
