@@ -1,6 +1,8 @@
 package com.github.cumtfc.srs.po.transcript;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.cumtfc.srs.domain.specification.PrevCourseSpecification;
 import com.github.cumtfc.srs.domain.specification.SelectOnceSpecification;
 import com.github.cumtfc.srs.domain.specification.Specification;
@@ -65,6 +67,34 @@ public class Transcript {
         }else {
             return "队列中";
         }
+    }
+
+    public ObjectNode toJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode = mapper.convertValue(this, ObjectNode.class);
+        objectNode.put("sectionSn", this.getSection().getSectionSn());
+        objectNode.put("courseName", this.getSection().getCourse().getCourseName());
+        objectNode.put("credit", this.getSection().getCourse().getCredit());
+        objectNode.put("teacherName", this.getSection().getTeacher().getName());
+        objectNode.put("room", this.getSection().getRoom());
+        objectNode.put("dayOfWeek", this.getSection().getDayOfWeek());
+        objectNode.put("timeOfDay", this.getSection().getTimeOfDay());
+        if (this.getGrade() != null) {
+            objectNode.put("grade", this.getGrade());
+        }
+        //这部分学生信息可以考虑不在这里序列化，结合业务场景
+        objectNode.put("state", this.state());
+        objectNode.put("name", this.getStudent().getName());
+        objectNode.put("studentSn", this.getStudent().getStudentSn());
+        objectNode.put("major", this.getStudent().getMajor());
+        objectNode.put("degree", this.getStudent().getDegree());
+        ObjectNode student = mapper.createObjectNode();
+        student.put("id", this.getStudent().getId());
+        objectNode.set("student", student);
+        ObjectNode section = mapper.createObjectNode();
+        section.put("id", this.getSection().getId());
+        objectNode.set("section", section);
+        return objectNode;
     }
 
     @Id

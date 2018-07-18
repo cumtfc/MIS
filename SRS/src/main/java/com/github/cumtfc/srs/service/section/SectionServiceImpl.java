@@ -2,7 +2,7 @@ package com.github.cumtfc.srs.service.section;
 
 import com.github.cumtfc.srs.dao.SectionRepository;
 import com.github.cumtfc.srs.dao.SysUserRepository;
-import com.github.cumtfc.srs.domain.SectionCatalog;
+import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.teacher.Teacher;
 import com.github.cumtfc.srs.po.user.SysUser;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author 冯楚
@@ -26,8 +25,6 @@ public class SectionServiceImpl implements SectionService {
     @Autowired
     SysUserRepository sysUserRepository;
 
-    private final SectionCatalog catalog=SectionCatalog.getInstance();
-
     @Override
     public Section findById(Integer id) {
         Optional<Section> byId = sectionRepository.findById(id);
@@ -37,7 +34,8 @@ public class SectionServiceImpl implements SectionService {
     @Override
     public String findAll() {
         List<Section> all = sectionRepository.findAll();
-        return catalog.getCourseArrangeJson(all);
+        Course course = new Course();
+        return course.getSectionsJson(all);
     }
 
     @Override
@@ -59,17 +57,20 @@ public class SectionServiceImpl implements SectionService {
             sysUser = user.get();
         }
         Teacher teacher = sysUser.getTeacher();
-        return catalog.getSectionJson(teacher.getSections());
+        Course course = new Course();
+        return course.getSectionsJson(teacher.getSections());
     }
 
     @Override
     public String getTeacherSectionAvailable() {
-        return catalog.getSectionJson(sectionRepository.findSectionsByTeacherNull());
+        Course course = new Course();
+        return course.getSectionsJson(sectionRepository.findSectionsByTeacherNull());
     }
 
     @Override
     public String getStudentSectionAvailable() {
-        return catalog.getSectionJson(sectionRepository.findSectionsByTeacherNotNull());
+        Course course = new Course();
+        return course.getSectionsJson(sectionRepository.findSectionsByTeacherNotNull());
     }
 
     @Override

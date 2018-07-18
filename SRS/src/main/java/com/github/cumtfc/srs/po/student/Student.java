@@ -1,6 +1,9 @@
 package com.github.cumtfc.srs.po.student;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.po.transcript.Transcript;
 import com.github.cumtfc.srs.po.user.SysUser;
@@ -33,6 +36,19 @@ public class Student implements Serializable {
     private List<Transcript> transcripts;
 
     private SysUser user;
+
+
+    public String transcriptJson(List<Transcript> transcripts) {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
+        for (Transcript transcript : transcripts) {
+            arrayNode.add(transcript.toJson());
+        }
+        return arrayNode.toString();
+    }
+
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

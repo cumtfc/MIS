@@ -3,7 +3,6 @@ package com.github.cumtfc.srs.service.transcript;
 import com.github.cumtfc.srs.dao.SectionRepository;
 import com.github.cumtfc.srs.dao.SysUserRepository;
 import com.github.cumtfc.srs.dao.TranscriptRepository;
-import com.github.cumtfc.srs.domain.TranscriptCatalog;
 import com.github.cumtfc.srs.po.section.Section;
 import com.github.cumtfc.srs.po.student.Student;
 import com.github.cumtfc.srs.po.transcript.Transcript;
@@ -27,11 +26,9 @@ public class TranscriptServiceImpl implements TranscriptService {
     @Autowired
     SectionRepository sectionRepository;
 
-    private final TranscriptCatalog catalog = TranscriptCatalog.getInstance();
-
     @Override
     public String findAllByStudentJson(Student student) {
-        return catalog.getTranscriptJsonForStudent(transcriptRepository.getTranscriptsByStudentEquals(student));
+        return student.transcriptJson(transcriptRepository.getTranscriptsByStudentEquals(student));
     }
 
     /**
@@ -63,7 +60,7 @@ public class TranscriptServiceImpl implements TranscriptService {
         Section section;
         if (byId.isPresent()) {
             section = byId.get();
-            return catalog.getTranscriptJsonBySection(section);
+            return section.transcriptBySectionJson();
         } else {
             return null;
         }
@@ -72,6 +69,10 @@ public class TranscriptServiceImpl implements TranscriptService {
     @Override
     public String updateTranscripts(List<Transcript> transcripts) {
         List<Transcript> saveEd = transcriptRepository.saveAll(transcripts);
-        return catalog.getTranscriptJsonForTeacher(saveEd);
+        if (transcripts.size() > 0 && transcripts.get(0).getSection() != null) {
+            return transcripts.get(0).getSection().transcriptBySectionJson();
+        } else {
+            return "[]";
+        }
     }
 }

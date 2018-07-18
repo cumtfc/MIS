@@ -1,7 +1,9 @@
 package com.github.cumtfc.srs.service.course;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.cumtfc.srs.dao.CourseRepository;
-import com.github.cumtfc.srs.domain.CourseCatalog;
 import com.github.cumtfc.srs.po.course.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +21,15 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    private final CourseCatalog catalog = CourseCatalog.getInstance();
-
     @Override
     public String findAllInJson() {
         List<Course> courses = courseRepository.findAll();
-        return catalog.toJSON(courses);
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
+        for (Course course : courses) {
+            arrayNode.add(course.toJson());
+        }
+        return arrayNode.toString();
     }
 
 

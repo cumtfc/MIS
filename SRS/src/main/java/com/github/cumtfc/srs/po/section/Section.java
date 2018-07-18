@@ -3,6 +3,9 @@ package com.github.cumtfc.srs.po.section;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.cumtfc.srs.po.course.Course;
 import com.github.cumtfc.srs.po.transcript.Transcript;
 import com.github.cumtfc.srs.po.teacher.Teacher;
@@ -45,6 +48,28 @@ public class Section implements Serializable {
         if (getSectionSn() == null) {
             setSectionSn(UUID.randomUUID().toString().substring(0,8));
         }
+    }
+
+
+    public String transcriptBySectionJson(){
+        List<Transcript> transcripts = this.getTranscripts();
+        if (transcripts.size() > this.getCapacity()) {
+            transcripts = transcripts.subList(0, this.getCapacity());
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
+        for (Transcript transcript : transcripts) {
+            arrayNode.add(transcript.toJson());
+        }
+        return arrayNode.toString();
+
+    }
+
+    public ObjectNode toJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode = mapper.convertValue(this, ObjectNode.class);
+        objectNode.put("capacityWithFraction", this.capacityLeft() + "/" + this.getCapacity());
+        return objectNode;
     }
 
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.github.cumtfc.srs.po.section.Section;
+import com.github.cumtfc.srs.po.transcript.Transcript;
 import com.github.cumtfc.srs.po.user.SysUser;
 
 import javax.persistence.*;
